@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimm.Db", "Wimm.Db\Wimm.Db.csproj", "{C22044B0-421E-489D-97D1-2CFFCBA881D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C22044B0-421E-489D-97D1-2CFFCBA881D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22044B0-421E-489D-97D1-2CFFCBA881D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22044B0-421E-489D-97D1-2CFFCBA881D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22044B0-421E-489D-97D1-2CFFCBA881D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {173A1C6C-6D86-4666-9AEF-D4C4C4E84EC0}
+	EndGlobalSection
+EndGlobal
