@@ -11,25 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(BooksTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-    }
-}
-
-class UsersTableSeeder extends Seeder
-{
-    // from https://github.com/guidocella/eloquent-populator
-    public function run()
-    {
-        \App\User::truncate();
-        $faker = \Faker\Factory::create();
-
-        $password = Hash::make('pass');
-        factory(\App\User::class, 1)->create([
-            'name' => 'admin',
-            'password' => $password
-        ]);
-        factory(\App\User::class, 10)->create([
-            'password' => $password
-        ]);
     }
 }
