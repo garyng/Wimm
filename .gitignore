@@ -344,3 +344,4 @@ ASALocalRun/
 
 # End of https://www.gitignore.io/api/visualstudio
 _ide_helper.php
+.phpstorm.meta.php
