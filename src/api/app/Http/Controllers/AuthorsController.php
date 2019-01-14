@@ -32,7 +32,7 @@ class AuthorsController extends Controller
     }
     public function delete($id)
     {
-        Author::findOrFail($id);
+        Author::findOrFail($id)->delete();
         return response()->json("");
     }
 }
