@@ -20,8 +20,9 @@ Route::middleware('api')->group(function () {
             return $request->user();
         });
     });
-
-    Route::apiResource('books', 'BookController');
+    Route::middleware('jwt')->group(function () {
+        Route::apiResource('books', 'BookController');
+    });
 });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Auth0\Login\Contract\Auth0UserRepository;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+
+        $this->app->bind(
+            Auth0UserRepository::class,
+            \Auth0\Login\Repository\Auth0UserRepository::class
+        );
     }
 }
