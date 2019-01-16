@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BookController extends Controller
@@ -15,9 +16,10 @@ class BookController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
         $book = Book::create([
+            // todo: get user id with custom user repo
             "user_id" => $request->user()->id,
             "title" => $request->title,
             "description" => $request->description
@@ -32,9 +34,8 @@ class BookController extends Controller
     }
 
 
-    public function update(Request $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book)
     {
-        // todo: check user id
         $book->update($request->only(['title', 'description']));
         return new BookResource($book);
     }
