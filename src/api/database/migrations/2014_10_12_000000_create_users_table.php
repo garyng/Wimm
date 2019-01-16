@@ -13,12 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        // todo: add currency
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+//            $table->string('password');
+            $table->string('auth0id');
+//            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Auth0\Login\Contract\Auth0UserRepository;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->bind(
-            Auth0UserRepository::class,
-            \Auth0\Login\Repository\Auth0UserRepository::class
+            \Auth0\Login\Contract\Auth0UserRepository::class,
+            \App\Repository\UserRepository::class
         );
     }
 }
