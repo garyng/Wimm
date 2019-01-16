@@ -12,6 +12,7 @@
         "auth0/login": "^5.1",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "flugger/laravel-responder": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0"
     },

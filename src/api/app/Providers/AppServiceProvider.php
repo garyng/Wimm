@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Book;
+use App\Transformers\BookTransformer;
+use Flugg\Responder\Contracts\Transformers\TransformerResolver;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +17,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // todo: remove withoutWrapping for resource
         Resource::withoutWrapping();
+        $this->app->make(TransformerResolver::class)->bind([
+           Book::class => BookTransformer::class
+        ]);
     }
 
     /**
