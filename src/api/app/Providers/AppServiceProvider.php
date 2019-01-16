@@ -17,8 +17,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // todo: remove withoutWrapping for resource
-        Resource::withoutWrapping();
         $this->app->make(TransformerResolver::class)->bind([
            Book::class => BookTransformer::class
         ]);
