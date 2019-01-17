@@ -8,8 +8,8 @@ import {
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
+import { StateService } from 'src/app/@services/state.service';
 
-import { StateService } from '../../../@core/data/state.service';
 
 // TODO: move layouts into the framework
 @Component({

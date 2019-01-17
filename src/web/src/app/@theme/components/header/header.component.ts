@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { LayoutService } from '../../../@core/data/layout.service';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NbTokenService } from '@nebular/auth';
 import { JwtClaimNames } from 'src/app/@common/constants.g';
+import { LayoutService } from 'src/app/@services/layout.service';
 
 @Component({
   selector: 'ngx-header',
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private layoutService: LayoutService,
-    private tokenService: NbTokenService,
+    // private tokenService: NbTokenService,
     private router: Router) {
   }
   // todo: remove all commented code
@@ -37,9 +37,9 @@ export class HeaderComponent implements OnInit {
       )
       .subscribe(_ => this.router.navigate(['auth/logout']));
 
-    this.tokenService
-      .get()
-      .subscribe(token => this.userName = token.getPayload()[JwtClaimNames.NAME]);
+    // this.tokenService
+    //   .get()
+    //   .subscribe(token => this.userName = token.getPayload()[JwtClaimNames.NAME]);
 
   }
 
