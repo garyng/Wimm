@@ -6,8 +6,7 @@ const routes: Routes = [
     path: '',
     // canActivate: ''
     loadChildren: './pages/pages.module#PagesModule'
-
-  }
+  },
 ];
 // todo: not found component
 @NgModule({
