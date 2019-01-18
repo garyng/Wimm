@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NbTokenService, NbAuthOAuth2JWTToken } from '@nebular/auth';
 import { JwtClaimNames } from 'src/app/@common/constants.g';
 import { LayoutService } from 'src/app/@services/layout.service';
+import { UserService } from 'src/app/@services/user.service';
 
 @Component({
   selector: 'ngx-header',
@@ -18,11 +19,12 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   userName: string;
+  name: string;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private layoutService: LayoutService,
-    private tokenService: NbTokenService,
+    private userService: UserService,
     private router: Router) {
   }
   // todo: remove all commented code
@@ -35,9 +37,9 @@ export class HeaderComponent implements OnInit {
       .pipe( filter(({ tag }) => tag === 'userMenu'), filter(({ item: { title } }) => title === 'Log out') )
       .subscribe(_ => this.router.navigate(['auth/logout']));
 
-    this.tokenService.get().subscribe(token => {
-      console.log(token.getPayload());
-    });
+      this.userService.profile.subscribe(profile => {
+        this.name = profile.name;
+      });
 
   }
 

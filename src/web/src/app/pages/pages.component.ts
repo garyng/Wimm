@@ -4,6 +4,7 @@ import { MENU_ITEM } from '../@common/menu-items';
 import { takeWhile } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AddComponent } from './records/add/add.component';
+import { UserService } from '../@services/user.service';
 
 @Component({
   selector: 'app-pages',
@@ -18,12 +19,14 @@ export class PagesComponent implements OnDestroy {
 
   currentTheme: string;
 
-  constructor(protected themeService: NbThemeService, private router: Router) {
+  constructor(protected themeService: NbThemeService, private userService: UserService,
+    private router: Router) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
         this.currentTheme = theme.name;
-    });
+      });
+    this.userService.profile.subscribe(profile => console.log([profile]));
   }
 
   ngOnDestroy() {

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NbDatepickerModule } from '@nebular/theme';
 import { HttpClientModule } from '@angular/common/http';
 import { NbAuthModule, NbOAuth2AuthStrategy, NbAuthOAuth2JWTToken } from '@nebular/auth';
+import { AppConstants } from './@common/app.constants';
 
 @NgModule({
   declarations: [
@@ -24,17 +25,17 @@ import { NbAuthModule, NbOAuth2AuthStrategy, NbAuthOAuth2JWTToken } from '@nebul
       strategies: [NbOAuth2AuthStrategy.setup({
         name: 'auth0',
         // Wimm.Web
-        clientId: '51LH4Hr2HsA4CZteofD1pmDl3FpeyeD0',
+        clientId: AppConstants.Auth0.clientId,
         clientSecret: '',
-        baseEndpoint: 'https://garyng.auth0.com',
+        baseEndpoint: AppConstants.Auth0.baseEndpoint,
         authorize: {
           endpoint: '/authorize',
           responseType: 'token',
-          scope: 'openid profile',
+          scope: AppConstants.Auth0.scope,
           // todo: use injected base url?
-          redirectUri: 'http://localhost:4200/auth/callback',
+          redirectUri: AppConstants.Auth0.redirectUri,
           params: {
-            'audience': 'https://wimm.api',
+            'audience': AppConstants.Auth0.audience,
           }
         },
         token: {
