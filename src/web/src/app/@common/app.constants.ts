@@ -5,7 +5,7 @@ export const AppConstants = {
     baseEndpoint: 'https://garyng.auth0.com',
     redirectUri: 'http://localhost:4200/auth/callback',
     audience: 'https://wimm.api',
-    scope: 'openid profile',
+    scope: 'openid profile name email',
   },
   Auth: {
     auth0StrategyName: 'auth0'
