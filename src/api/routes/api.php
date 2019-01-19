@@ -28,6 +28,11 @@ Route::middleware('api')->group(function () {
             Route::put('/currency', 'UsersController@currency');
         });
 
+        Route::prefix('currencies')->group(function() {
+            Route::get('', 'CurrenciesController@index');
+            Route::get('/{from}/{to}', 'CurrenciesController@convert');
+        });
+
     });
 });
 
