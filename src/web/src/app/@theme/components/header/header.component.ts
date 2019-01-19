@@ -7,6 +7,7 @@ import { NbTokenService, NbAuthOAuth2JWTToken } from '@nebular/auth';
 import { JwtClaimNames } from 'src/app/@common/constants.g';
 import { LayoutService } from 'src/app/@services/layout.service';
 import { UserService } from 'src/app/@services/user.service';
+import * as Auth0 from 'auth0-js';
 
 @Component({
   selector: 'ngx-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   userName: string;
-  name: string;
+  profile: Auth0.Auth0UserProfile;
 
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(_ => this.router.navigate(['auth/logout']));
 
       this.userService.profile.subscribe(profile => {
-        this.name = profile.name;
+        this.profile = profile;
       });
 
   }
