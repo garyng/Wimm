@@ -10,6 +10,7 @@ use Auth0\SDK\Auth0;
 use Auth0\SDK\Exception\CoreException;
 use Auth0\SDK\Exception\InvalidTokenException;
 use Closure;
+use Flugg\Responder\Exceptions\Http\UnauthorizedException;
 use Illuminate\Http\Response;
 
 class Auth0JwtMiddleware
@@ -38,15 +39,15 @@ class Auth0JwtMiddleware
             $user = $this->userRepository->getUser($accessToken);
 
             if (!$user) {
-                return response()->json("Unauthorized user", Response::HTTP_UNAUTHORIZED);
+                throw new UnauthorizedException();
             }
             \Auth::login($user);
 
         } catch (InvalidTokenException $e) {
-            return response()->json($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            throw new UnauthorizedException($e->getMessage());
 
         } catch (CoreException $e) {
-            return response()->json($e->getMessage(), Response::HTTP_UNAUTHORIZED);
+            throw new UnauthorizedException($e->getMessage());
         }
         return $next($request);
     }
