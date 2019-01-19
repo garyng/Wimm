@@ -25,10 +25,12 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \App\Category $category
  * @property-read \App\User $user
+ * @property string $currency
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Budget whereCurrency($value)
  */
 class Budget extends Model
 {
-    protected $fillable = ['user_id', 'category_id', 'limit_per_day'];
+    protected $fillable = ['user_id', 'category_id', 'limit_per_day', 'currency'];
 
     public function user()
     {

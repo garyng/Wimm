@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Recurrence;
 use Doctrine\DBAL\Types\BigIntType;
 use Flugg\Responder\Transformers\Transformer;
+use Swap\Laravel\Facades\Swap;
 
 class RecurrenceTransformer extends Transformer
 {
@@ -38,6 +39,8 @@ class RecurrenceTransformer extends Transformer
             'description' => $recurrence->description,
             'frequency' => $recurrence->frequency,
             'nextTimestamp' => $recurrence->next_timestamp,
+            'currency' => $recurrence->currency,
+            'localAmount' => round($recurrence->amount * Swap::latest($recurrence->currency . '/' . request()->user()->currency)->getValue(), 2)
         ];
     }
 }

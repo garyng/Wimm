@@ -34,7 +34,8 @@ class UpdateRecurrenceRequest extends FormRequest
                 'required',
                 Rule::in(['daily', 'weekly', 'monthly', 'yearly'])
             ],
-            'next_timestamp' => 'sometimes|required|numeric'
+            'next_timestamp' => 'sometimes|required|numeric',
+            'currency' => 'sometimes|required|string'
         ];
     }
 }

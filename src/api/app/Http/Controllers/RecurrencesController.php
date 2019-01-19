@@ -23,6 +23,7 @@ class RecurrencesController extends Controller
             'description' => $request->description,
             'frequency' => $request->frequency,
             'next_timestamp' => $request->next_timestamp,
+            'currency' => $request->currency
         ]);
 
         return responder()->success($recurrence)->respond();
@@ -37,7 +38,7 @@ class RecurrencesController extends Controller
     public function update(UpdateRecurrenceRequest $request, Recurrence $recurrence)
     {
         $this->check($recurrence);
-        $recurrence->update($request->only(['category_id', 'amount', 'description', 'frequency', 'next_timestamp']));
+        $recurrence->update($request->only(['category_id', 'amount', 'description', 'frequency', 'next_timestamp', 'currency']));
         return responder()->success($recurrence)->respond();
     }
 

@@ -27,6 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereUpdatedAt($value)
  * @property int $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereUserId($value)
+ * @property string $currency
+ * @property int $timestamp
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereTimestamp($value)
  */
 class Record extends Model
 {

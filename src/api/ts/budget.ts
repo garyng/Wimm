@@ -7,6 +7,7 @@ export class Budget extends ModelFilter {
     public userId: number = 0,
     public categoryId: number = 0,
     public limitPerDay: number = 0.0,
+    public currency: string = '',
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     ) {
@@ -19,6 +20,7 @@ export class Budget extends ModelFilter {
         rawObj.userId,
         rawObj.categoryId,
         rawObj.limitPerDay,
+        rawObj.currency,
         rawObj.createdAt,
         rawObj.updatedAt,
     );

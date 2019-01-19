@@ -10,6 +10,7 @@ export class Recurrence extends ModelFilter {
     public description: string = '',
     public frequency: string = '',
     public nextTimestamp: number = 0,
+    public currency: string = '',
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     ) {
@@ -25,6 +26,7 @@ export class Recurrence extends ModelFilter {
         rawObj.description,
         rawObj.frequency,
         rawObj.nextTimestamp,
+        rawObj.currency,
         rawObj.createdAt,
         rawObj.updatedAt,
     );

@@ -27,6 +27,7 @@ class StoreBudgetRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
             'limit_per_day' => 'required|numeric',
+            'currency' => 'required|string'
         ];
     }
 }

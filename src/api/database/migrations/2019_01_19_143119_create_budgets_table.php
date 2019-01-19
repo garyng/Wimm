@@ -18,6 +18,7 @@ class CreateBudgetsTable extends Migration
             $table->integer('user_id');
             $table->integer('category_id');
             $table->decimal('limit_per_day');
+            $table->string('currency');
             $table->timestamps();
         });
     }

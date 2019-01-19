@@ -19,7 +19,8 @@ class BudgetsController extends Controller
         $budget = Budget::create([
             'user_id' => $request->user()->id,
             'category_id' => $request->category_id,
-            'limit_per_day' => $request->limit_per_day
+            'limit_per_day' => $request->limit_per_day,
+            'currency' => $request->currency
         ]);
         return responder()->success($budget)->respond();
     }

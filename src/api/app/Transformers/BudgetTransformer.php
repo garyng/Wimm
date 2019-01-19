@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Budget;
 use Flugg\Responder\Transformers\Transformer;
+use Swap\Laravel\Facades\Swap;
 
 class BudgetTransformer extends Transformer
 {
@@ -34,6 +35,8 @@ class BudgetTransformer extends Transformer
             'userId' => (int)$budget->user_id,
             'categoryId' => (int)$budget->category_id,
             'limitPerDay' => (float)$budget->limit_per_day,
+            'currency' => $budget->currency,
+            'localAmount' => round($budget->limit_per_day * Swap::latest($budget->currency . '/' . request()->user()->currency)->getValue(), 2)
         ];
     }
 }

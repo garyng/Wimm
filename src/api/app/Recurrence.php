@@ -33,10 +33,12 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $next_timestamp
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Recurrence whereNextTimestamp($value)
+ * @property string $currency
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Recurrence whereCurrency($value)
  */
 class Recurrence extends Model
 {
-    protected $fillable = ['user_id', 'category_id', 'amount', 'description', 'frequency', 'next'];
+    protected $fillable = ['user_id', 'category_id', 'amount', 'description', 'frequency', 'next', 'currency'];
 
     public function user()
     {
