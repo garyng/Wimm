@@ -1,0 +1,85 @@
+<nb-card>
+  <nb-card-header>New record</nb-card-header>
+  <nb-card-body>
+    <!-- expenses/income toggle group -->
+    <div class="row">
+      <div class="col-12 input-group">
+        <!-- (ngModelChange)="onRecordTypeChanged()" -->
+        <div [(ngModel)]="recordType" ngbRadioGroup class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
+          <label ngbButtonLabel class="btn btn-outline-primary">
+            <input ngbButton type="radio" value="expense"> Expense
+          </label>
+          <label ngbButtonLabel class="btn btn-outline-primary">
+            <input ngbButton type="radio" value="income"> Income
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+
+          <div class="col-sm-8">
+            <!-- input amount -->
+            <div class="input-group" [ngSwitch]="recordType">
+              <ng-template [ngSwitchCase]="recordTypes.expense">
+                <span class="input-group-addon danger">
+                  <i class="fas fa-minus"></i>
+                </span>
+              </ng-template>
+              <ng-template [ngSwitchCase]="recordTypes.income">
+                <span class="input-group-addon success">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </ng-template>
+              <input type="number" class="form-control" placeholder="Amount" />
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <!-- currencies -->
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="selectedCurrency">
+                <option *ngFor="let c of currencies" [ngValue]="c">{{ c }}</option>
+              </select>
+              <div *ngIf="selectedCurrency !== defaultCurrency">todo: show conversion rate</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <!-- category -->
+            <div class="input-group">
+              <select class="form-control" [(ngModel)]="selectedCategory">
+                <option *ngFor="let c of categories" [ngValue]="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <!-- datetime -->
+
+            <div class="input-group">
+              <input class="form-control" placeholder="Date" [(ngModel)]="selectedDate" [nbDatepicker]="datePicker">
+              <nb-datepicker #datePicker></nb-datepicker>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+
+        <!-- description -->
+
+        <div class="input-group">
+          <textarea rows="5" placeholder="Description" [(ngModel)]="description" class="form-control"></textarea>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+          <button nbButton hero fullWidth status="primary">Add</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
