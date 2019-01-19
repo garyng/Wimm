@@ -11,7 +11,6 @@ class RecordsTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Record::truncate();
         factory(\App\Record::class, 100)->create();
     }
 }

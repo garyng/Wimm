@@ -27,7 +27,9 @@ class StoreRecordRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
             'amount' => 'required|numeric',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'timestamp' => 'required|numeric',
+            'currency' => 'required|string'
         ];
     }
 }

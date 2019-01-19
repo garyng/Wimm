@@ -20,7 +20,9 @@ class RecordsController extends Controller
             'amount' => $request->amount,
             'description' => $request->description,
             'category_id' => $request->category_id,
-            'user_id' => $request->user()->id
+            'user_id' => $request->user()->id,
+            'timestamp' => $request->timestamp,
+            'currency' => $request->currency
         ]);
         return responder()->success($record);
     }
@@ -34,7 +36,7 @@ class RecordsController extends Controller
     public function update(UpdateRecordRequest $request, Record $record)
     {
         $this->check($record);
-        $record->update($request->only(['amount', 'description', 'category_id']));
+        $record->update($request->only(['amount', 'description', 'category_id', 'timestamp', 'currency']));
         return responder()->success($record)->respond();
     }
 

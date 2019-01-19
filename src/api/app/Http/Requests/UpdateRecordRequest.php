@@ -27,7 +27,9 @@ class UpdateRecordRequest extends FormRequest
             'user_id' => 'sometimes|required|exists:users,id',
             'category_id' => 'sometimes|required|exists:categories,id',
             'amount' => 'sometimes|required|numeric',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'timestamp' => 'sometimes|required|numeric',
+            'currency' => 'sometimes|required|string'
         ];
     }
 }

@@ -17,8 +17,10 @@ class CreateRecordsTable extends Migration
             $table->increments('id');
             $table->decimal('amount');
             $table->text('description');
+            $table->text('currency');
             $table->integer('category_id');
             $table->integer('user_id');
+            $table->unsignedInteger('timestamp');
             $table->timestamps();
         });
     }

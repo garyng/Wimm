@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Record;
 use Flugg\Responder\Transformers\Transformer;
+use Swap\Laravel\Facades\Swap;
 
 class RecordTransformer extends Transformer
 {
@@ -35,6 +36,9 @@ class RecordTransformer extends Transformer
             'description' => $record->description,
             'categoryId' => (int)$record->category_id,
             'userId' => (int)$record->user_id,
+            'timestamp' => $record->timestamp,
+            'currency' => $record->currency,
+            'localAmount' => round($record->amount * Swap::latest($record->currency . '/' . request()->user()->currency)->getValue(), 2)
         ];
     }
 }
