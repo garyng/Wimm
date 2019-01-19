@@ -6,22 +6,23 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { NbDatepickerModule } from '@nebular/theme';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpRequest } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+  HttpRequest} from '@angular/common/http';
 import {
   NbAuthModule,
-  NbOAuth2AuthStrategy,
-  NbAuthOAuth2JWTToken,
-  NbAuthJWTInterceptor,
-  NB_AUTH_TOKEN_INTERCEPTOR_FILTER
+  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
+  NbAuthJWTInterceptor
 } from '@nebular/auth';
 import { AppConstants } from './@common/app.constants';
 import { AuthGuard } from './@services/auth.guard';
+import { NbAuth0AuthStrategy } from './auth0/NbAuth0AuthStrategy';
+import { NbAuthAuth0Token } from './auth0/NbAuthAuth0Token';
 
 // only attach jwt token for api calls
 export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
-    return !['http://localhost:4200/api/']
-        .every(url => req.url.includes(url));
-  return false;
+  return !['/api/'].every(url => req.url.includes(url));
 }
 
 @NgModule({
@@ -35,7 +36,7 @@ export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
     NbDatepickerModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
-        NbOAuth2AuthStrategy.setup({
+        NbAuth0AuthStrategy.setup({
           name: AppConstants.Auth.auth0StrategyName,
           // Wimm.Web
           clientId: AppConstants.Auth0.clientId,
@@ -43,16 +44,14 @@ export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
           baseEndpoint: AppConstants.Auth0.baseEndpoint,
           authorize: {
             endpoint: '/authorize',
-            responseType: 'token',
+            responseType: 'token id_token',
             scope: AppConstants.Auth0.scope,
             // todo: use injected base url?
             redirectUri: AppConstants.Auth0.redirectUri,
-            params: {
-              audience: AppConstants.Auth0.audience
-            }
+            audience: AppConstants.Auth0.audience
           },
           token: {
-            class: NbAuthOAuth2JWTToken
+            class: NbAuthAuth0Token // NbAuthOAuth2JWTToken
           },
           redirect: {
             success: '/app/records'
@@ -64,7 +63,10 @@ export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
   ],
   providers: [
     AuthGuard,
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: excludeFromTokenInterceptor },
+    {
+      provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
+      useValue: excludeFromTokenInterceptor
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NbAuthJWTInterceptor,

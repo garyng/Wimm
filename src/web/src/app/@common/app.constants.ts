@@ -9,5 +9,8 @@ export const AppConstants = {
   },
   Auth: {
     auth0StrategyName: 'auth0'
+  },
+  Api: {
+    baseEndpoint: '/api',
   }
 };
