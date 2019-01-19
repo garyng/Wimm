@@ -54,6 +54,7 @@
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.3.3",
+    "sweetalert2": "^8.0.1",
     "tinymce": "^4.9.2",
     "typeface-exo": "0.0.61",
     "web-animations-js": "^2.3.1",

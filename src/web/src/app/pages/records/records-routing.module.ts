@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RecordsComponent } from './records.component';
 import { AddComponent } from './add/add.component';
-import { FormInputsComponent } from './form-inputs/form-inputs.component';
-import { ButtonGroupsComponent } from './button-groups/button-groups.component';
-import { DatepickerComponent } from './datepicker/datepicker.component';
+import { ListComponent } from './list/list.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,16 +13,13 @@ const routes: Routes = [{
       component: AddComponent
     },
     {
-      path: 'input',
-      component: FormInputsComponent
+      path: 'list',
+      component: ListComponent
     },
     {
-      path: 'button',
-      component: ButtonGroupsComponent
-    },
-    {
-      path: 'date',
-      component: DatepickerComponent
+      path: '',
+      redirectTo: 'list',
+      pathMatch: 'full'
     }
   ]
 }];

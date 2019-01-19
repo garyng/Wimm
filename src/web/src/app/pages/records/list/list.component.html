@@ -1,0 +1,9 @@
+<nb-card>
+  <nb-card-header>
+    Records
+    <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="tableSettings" [source]="allRecords" (delete)="onDelete($event)"></ng2-smart-table>
+  </nb-card-body>
+</nb-card>

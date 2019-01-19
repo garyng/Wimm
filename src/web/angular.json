@@ -34,13 +34,15 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/angular-tree-component/dist/angular-tree-component.css",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/app/@theme/styles/styles.scss"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
               "node_modules/echarts/dist/echarts.min.js",
               "node_modules/echarts/dist/extension/bmap.min.js",
-              "node_modules/chart.js/dist/Chart.min.js"
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/sweetalert2/dist/sweetalert2.js"
             ]
           },
           "configurations": {
@@ -99,13 +101,15 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/angular-tree-component/dist/angular-tree-component.css",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/app/@theme/styles/styles.scss"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
               "node_modules/echarts/dist/echarts.min.js",
               "node_modules/echarts/dist/extension/bmap.min.js",
-              "node_modules/chart.js/dist/Chart.min.js"
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/sweetalert2/dist/sweetalert2.js"
             ],
             "assets": [
               "src/favicon.ico",

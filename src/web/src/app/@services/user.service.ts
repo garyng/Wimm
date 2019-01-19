@@ -14,6 +14,7 @@ export class UserService {
 
   get profile(): Observable<Auth0.Auth0UserProfile> {
     return this.tokenService.get().pipe(
+      // todo: need to get the id from the backend api
       map((token: NbAuthAuth0Token) => token.getProfile())
     );
   }

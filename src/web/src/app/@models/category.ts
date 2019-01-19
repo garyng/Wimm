@@ -1,24 +1,20 @@
 import { ModelFilter } from './model-filter';
 
-export class Book extends ModelFilter {
+export class Category extends ModelFilter {
 
   constructor(
     public id: number = 0,
-    public userId: number = 0,
-    public title: string = '',
-    public description: string = '',
+    public name: string = '',
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     ) {
     super();
   }
 
-  public static create(rawObj: Book): Book {
-    return new Book(
+  public static create(rawObj: Category): Category {
+    return new Category(
         rawObj.id,
-        rawObj.userId,
-        rawObj.title,
-        rawObj.description,
+        rawObj.name,
         rawObj.createdAt,
         rawObj.updatedAt,
     );
