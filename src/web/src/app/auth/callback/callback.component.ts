@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 import { Router } from '@angular/router';
-import { takeWhile, delay } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+import { AppConstants } from 'src/app/@common/app.constants';
 
 @Component({
   selector: 'app-callback',
@@ -14,7 +14,7 @@ export class CallbackComponent implements OnDestroy {
   alive = true;
 
   constructor(private authService: NbAuthService, private router: Router) {
-    this.authService.authenticate('auth0')
+    this.authService.authenticate(AppConstants.Auth.auth0StrategyName)
       .pipe(takeWhile(() => this.alive))
       .subscribe((authResult: NbAuthResult) => {
         if (authResult.isSuccess() && authResult.getRedirect()) {

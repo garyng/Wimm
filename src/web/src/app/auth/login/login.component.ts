@@ -1,27 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NbAuthService, NbAuthResult } from '@nebular/auth';
 import { takeWhile } from 'rxjs/operators';
+import { AppConstants } from 'src/app/@common/app.constants';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  template: '',
+  styles: []
 })
 export class LoginComponent implements OnDestroy {
-  constructor(private authService: NbAuthService) {}
-
   alive = true;
-
-  login() {
+  constructor(private authService: NbAuthService) {
     this.authService
-      .authenticate('auth0')
+      .authenticate(AppConstants.Auth.auth0StrategyName)
       .pipe(takeWhile(() => this.alive))
-      .subscribe((authResult: NbAuthResult) => {
-      });
+      .subscribe((authResult: NbAuthResult) => {});
   }
-
-  // logout
-
   ngOnDestroy(): void {
     this.alive = false;
   }

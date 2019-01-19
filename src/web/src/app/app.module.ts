@@ -9,6 +9,7 @@ import { NbDatepickerModule } from '@nebular/theme';
 import { HttpClientModule } from '@angular/common/http';
 import { NbAuthModule, NbOAuth2AuthStrategy, NbAuthOAuth2JWTToken } from '@nebular/auth';
 import { AppConstants } from './@common/app.constants';
+import { AuthGuard } from './@services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AppConstants } from './@common/app.constants';
     NbDatepickerModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [NbOAuth2AuthStrategy.setup({
-        name: 'auth0',
+        name: AppConstants.Auth.auth0StrategyName,
         // Wimm.Web
         clientId: AppConstants.Auth0.clientId,
         clientSecret: '',
@@ -42,14 +43,14 @@ import { AppConstants } from './@common/app.constants';
           class: NbAuthOAuth2JWTToken
         },
         redirect: {
-          'success': '/records',
+          'success': '/app/records',
           // 'failure': ''
         }
       })
       ]
     })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

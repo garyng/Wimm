@@ -6,5 +6,8 @@ export const AppConstants = {
     redirectUri: 'http://localhost:4200/auth/callback',
     audience: 'https://wimm.api',
     scope: 'openid profile',
+  },
+  Auth: {
+    auth0StrategyName: 'auth0'
   }
 };

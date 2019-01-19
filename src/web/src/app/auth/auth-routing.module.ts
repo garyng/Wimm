@@ -2,16 +2,28 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CallbackComponent } from './callback/callback.component';
+import { LogoutComponent } from './logout/logout.component';
+import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'callback',
-    component: CallbackComponent
-  },
+    path: '',
+    component: AuthComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent
+      },
+      {
+        path: 'callback',
+        component: CallbackComponent
+      },
+    ]
+  }
   // {
   //   path: '',
   //   redirectTo: 'login',

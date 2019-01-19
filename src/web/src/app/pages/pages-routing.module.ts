@@ -10,10 +10,6 @@ const routes: Routes = [{
       path: 'records',
       loadChildren: './records/records.module#RecordsModule'
     },
-    {
-      path: 'auth',
-      loadChildren: './auth/auth.module#AuthModule'
-    },
   ]
 }];
 

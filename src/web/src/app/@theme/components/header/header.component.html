@@ -16,7 +16,7 @@
     [class.left]="position === 'inverse'">
     <!-- <nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action> -->
     <!-- <nb-action *nbIsGranted="['view', 'user']" > -->
-    <nb-action>
+    <nb-action *ngIf="name">
       <!-- use [name] for binding -->
       <nb-user [nbContextMenu]="userMenu" nbContextMenuTag="userMenu" [name]="name"></nb-user>
     </nb-action>

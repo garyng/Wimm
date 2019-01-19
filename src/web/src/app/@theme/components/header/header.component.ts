@@ -29,8 +29,6 @@ export class HeaderComponent implements OnInit {
   }
   // todo: remove all commented code
   ngOnInit() {
-    // this.userService.getUsers()
-    //   .subscribe((users: any) => this.user = users.nick);
 
     this.menuService
       .onItemClick()
@@ -50,17 +48,8 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
-  // toggleSettings(): boolean {
-  //   this.sidebarService.toggle(false, 'settings-sidebar');
-
-  //   return false;
-  // }
-
   goToHome() {
     this.menuService.navigateHome();
   }
 
-  // startSearch() {
-  //   this.analyticsService.trackEvent('startSearch');
-  // }
 }
