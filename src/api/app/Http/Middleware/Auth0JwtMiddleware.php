@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Repository\UserRepository;
+use Auth0\Login\Auth0Service;
 use Auth0\Login\Contract\Auth0UserRepository;
+use Auth0\SDK\API\Authentication;
 use Auth0\SDK\Auth0;
 use Auth0\SDK\Exception\CoreException;
 use Auth0\SDK\Exception\InvalidTokenException;
@@ -12,11 +15,11 @@ use Illuminate\Http\Response;
 class Auth0JwtMiddleware
 {
     /**
-     * @var Auth0UserRepository
+     * @var UserRepository
      */
     private $userRepository;
 
-    public function __construct(Auth0UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -32,8 +35,7 @@ class Auth0JwtMiddleware
     {
         $accessToken = $request->bearerToken();
         try {
-            $jwt = \Auth0\Login\Facade\Auth0::decodeJWT($accessToken);
-            $user = $this->userRepository->getUserByDecodedJWT($jwt);
+            $user = $this->userRepository->getUser($accessToken);
 
             if (!$user) {
                 return response()->json("Unauthorized user", Response::HTTP_UNAUTHORIZED);
