@@ -3,7 +3,7 @@ import { NbMenuItem, NbThemeService } from '@nebular/theme';
 import { MENU_ITEM } from '../@common/menu-items';
 import { takeWhile } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../@services/user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-pages',
@@ -19,7 +19,6 @@ export class PagesComponent implements OnDestroy {
   currentTheme: string;
 
   constructor(protected themeService: NbThemeService,
-    private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
     this.themeService.getJsTheme()
@@ -34,7 +33,7 @@ export class PagesComponent implements OnDestroy {
   }
 
   goToNewRecord() {
-    this.router.navigate(['./records/add'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['./records/add'], { relativeTo: this.activatedRoute });
   }
 
 }
