@@ -15,13 +15,19 @@ use Illuminate\Http\Request;
 
 Route::middleware('api')->group(function () {
 
-    Route::prefix('users')->group(function () {
-        Route::get('', function (Request $request) {
-            return $request->user();
-        });
-    });
+
     Route::middleware('jwt')->group(function () {
         Route::apiResource('books', 'BookController');
+        Route::apiResource('records', 'RecordsController');
+        Route::apiResource('categories', 'CategoriesController');
+        Route::apiResource('budgets', 'BudgetsController');
+        Route::apiResource('recurrences', 'RecurrencesController');
+
+        Route::prefix('user')->group(function () {
+            Route::get('', 'UsersController@get');
+            Route::put('/currency', 'UsersController@currency');
+        });
+
     });
 });
 

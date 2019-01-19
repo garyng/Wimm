@@ -16,9 +16,9 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('amount');
-            // $table->decimal('type');
             $table->text('description');
             $table->integer('category_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

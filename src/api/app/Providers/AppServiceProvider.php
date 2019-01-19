@@ -18,7 +18,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->make(TransformerResolver::class)->bind([
-           Book::class => BookTransformer::class
+            \App\Book::class => \App\Transformers\BookTransformer::class,
+            \App\Record::class => \App\Transformers\RecordTransformer::class,
+            \App\Category::class => \App\Transformers\CategoryTransformer::class,
+            \App\Budget::class => \App\Transformers\BudgetTransformer::class,
+            \App\User::class => \App\Transformers\UserTransformer::class,
+            \App\Recurrence::class => \App\Transformers\RecurrenceTransformer::class
         ]);
     }
 

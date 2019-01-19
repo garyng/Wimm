@@ -39,7 +39,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'currency', 'email'
     ];
 
     /**
@@ -47,12 +47,15 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = [];
 
-    public function books()
+    public function budgets()
     {
-        $this->hasMany(Book::class);
+        return $this->hasMany(Budget::class);
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
     }
 }
