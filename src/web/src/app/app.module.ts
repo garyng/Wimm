@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
-import { NbDatepickerModule } from '@nebular/theme';
 import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
@@ -31,9 +31,9 @@ export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
-    NbDatepickerModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
         NbAuth0AuthStrategy.setup({
