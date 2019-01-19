@@ -17,10 +17,10 @@ class UserRepository
 
     public function upsertUser($profile)
     {
-        // todo: add default currency
         $user = User::where('auth0id', $profile['sub'])->first();
         if ($user === null) {
             $user = new User();
+            $user->currency = 'MYR';
             $user->email = $profile['email']; // require email scope
             $user->auth0id = $profile['sub'];
             $user->name = $profile['name'];   // require name scope

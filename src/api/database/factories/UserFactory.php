@@ -18,6 +18,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'currency' => $faker->currencyCode,
         'auth0id' => '',
 //        'email_verified_at' => now(),
 //        'password' => $hash
