@@ -28,6 +28,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @mixin \Eloquent
  * @property string $currency
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCurrency($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Budget[] $budgets
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Record[] $records
  */
 class User extends Authenticatable
 {

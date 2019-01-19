@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereUpdatedAt($value)
+ * @property int $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Record whereUserId($value)
  */
 class Record extends Model
 {

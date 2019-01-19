@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Budget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Budget whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Category $category
+ * @property-read \App\User $user
  */
 class Budget extends Model
 {

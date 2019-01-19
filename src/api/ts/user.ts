@@ -7,6 +7,7 @@ export class User extends ModelFilter {
     public name: string = '',
     public email: string = '',
     public auth0id: string = '',
+    public currency: string = '',
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     ) {
@@ -19,6 +20,7 @@ export class User extends ModelFilter {
         rawObj.name,
         rawObj.email,
         rawObj.auth0id,
+        rawObj.currency,
         rawObj.createdAt,
         rawObj.updatedAt,
     );
