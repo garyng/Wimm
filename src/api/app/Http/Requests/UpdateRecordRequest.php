@@ -24,7 +24,6 @@ class UpdateRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'sometimes|required|exists:users,id',
             'category_id' => 'sometimes|required|exists:categories,id',
             'amount' => 'sometimes|required|numeric',
             'description' => 'nullable',

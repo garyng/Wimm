@@ -25,7 +25,6 @@ class StoreRecurrenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
             'amount' => 'required|numeric',
             'description' => 'nullable',

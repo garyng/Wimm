@@ -20,7 +20,7 @@ class RecordsController extends Controller
             'amount' => $request->amount,
             'description' => $request->description,
             'category_id' => $request->category_id,
-            'user_id' => $request->user()->id,
+            'user_id' => request()->user()->id,
             'timestamp' => $request->timestamp,
             'currency' => $request->currency
         ]);

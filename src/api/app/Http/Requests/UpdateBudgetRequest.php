@@ -24,7 +24,6 @@ class UpdateBudgetRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'sometimes|required|exists:users,id',
             'category_id' => 'sometimes|required|exists:categories,id',
             'limit_per_day' => 'sometimes|required|numeric',
             'currency' => 'sometimes|required|string'
