@@ -7,6 +7,8 @@ import { Category } from '../@models/category';
 import { Recurrence } from '../@models/recurrence';
 import { Record } from '../@models/record';
 import { map } from 'rxjs/operators';
+import { User } from '../@models/user';
+import { Currency } from '../@models/currency';
 
 export class ApiErrorResponse {
   public code: string;
@@ -64,7 +66,6 @@ export abstract class RepositoryBase<T> {
       map(response => response.data),
     );
   }
-
 }
 
 @Injectable({
@@ -85,9 +86,57 @@ export class CategoriesRepository extends RepositoryBase<Category> {
   }
 }
 
-// currencies
-// user
+@Injectable({
+  providedIn: 'root'
+})
+export class CurrenciesRepository {
+  protected baseEndpoint = AppConstants.Api.baseEndpoint;
+  protected apiUrl = '';
 
+  protected apiUrlFunc = (endpoint) => `${this.baseEndpoint}/${endpoint}`;
+
+  constructor(protected http: HttpClient) {
+    this.apiUrl = this.apiUrlFunc('currencies');
+  }
+
+  public getAll(): Observable<Currency[]> {
+    return this.http.get<ApiResponse<Currency[]>>(this.apiUrl).pipe(
+      map(response => response.data),
+    );
+  }
+
+  public getRate(from: string, to: string): Observable<number> {
+    return this.http.get<ApiResponse<number>>(`${this.apiUrl}/${from}/${to}`).pipe(
+      map(response => response.data),
+    );
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserRepository {
+  protected baseEndpoint = AppConstants.Api.baseEndpoint;
+  protected apiUrl = '';
+
+  protected apiUrlFunc = (endpoint) => `${this.baseEndpoint}/${endpoint}`;
+
+  constructor(protected http: HttpClient) {
+    this.apiUrl = this.apiUrlFunc('user');
+  }
+
+  public get(): Observable<User> {
+    return this.http.get<ApiResponse<User>>(`${this.apiUrl}`).pipe(
+      map(response => response.data),
+    );
+  }
+
+  public updateCurrency(currency: string): Observable<User> {
+    return this.http.patch<ApiResponse<User>>(this.apiUrl, currency).pipe(
+      map(response => response.data),
+    );
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +146,6 @@ export class RecordsRepository extends RepositoryBase<Record> {
     super('records', http);
   }
 }
-
 
 @Injectable({
   providedIn: 'root'
