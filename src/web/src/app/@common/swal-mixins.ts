@@ -15,3 +15,18 @@ export const swalDeleted = Swal.mixin({
   title: 'Deleted',
   type: 'success'
 });
+
+export const swalAdd = Swal.mixin({
+  type: 'question',
+  title: 'Are you sure?',
+  showCancelButton: true,
+  confirmButtonText: 'Yes',
+  allowOutsideClick: !Swal.isLoading,
+  allowEscapeKey: !Swal.isLoading,
+  showLoaderOnConfirm: true,
+});
+
+export const swalAdded = Swal.mixin({
+  title: 'Added',
+  type: 'success'
+});

@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
   <nb-card-header>
     Records
     <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action>

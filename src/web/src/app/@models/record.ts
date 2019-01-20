@@ -29,7 +29,7 @@ export class Record extends ModelFilter {
         rawObj.userId,
         rawObj.timestamp,
         rawObj.createdAt,
-        rawObj.updatedAt,
+        rawObj.updatedAt
     );
   }
 

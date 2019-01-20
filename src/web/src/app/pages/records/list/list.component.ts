@@ -6,8 +6,8 @@ import { ReplaySubject } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { tap, flatMap } from 'rxjs/operators';
 import { Category } from 'src/app/@models/category';
-import Swal from 'sweetalert2';
 import { swalDelete, swalDeleted } from 'src/app/@common/swal-mixins';
+import { SpinnerService } from 'src/app/@services/spinner.service';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +15,7 @@ import { swalDelete, swalDeleted } from 'src/app/@common/swal-mixins';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  getAllRecords$: ReplaySubject<Record[]> = new ReplaySubject();
+  load$: ReplaySubject<{}> = new ReplaySubject();
   allRecords: LocalDataSource = new LocalDataSource();
 
   tableSettings = {
@@ -59,21 +59,23 @@ export class ListComponent implements OnInit {
     }
   };
 
-  constructor(private recordsRepo: RecordsRepository, private onError: ErrorsHandler) {
-    this.getAllRecords$
+  constructor(private recordsRepo: RecordsRepository, private onError: ErrorsHandler, public spinner: SpinnerService) {
+    this.load$
       .pipe(
+        tap(_ => this.spinner.show()),
         tap(_ => this.allRecords.empty),
-        flatMap(_ => this.recordsRepo.getAll())
+        flatMap(_ => this.recordsRepo.getAll()),
+        tap(records => this.allRecords.load(records))
       )
-      .subscribe(records => this.allRecords.load(records),
+      .subscribe(_ => this.spinner.hide(),
         error => this.onError.notify(error));
-    this.getAllRecords$.next();
+    this.load$.next();
   }
 
   ngOnInit() { }
 
   onRefresh() {
-    this.getAllRecords$.next();
+    this.load$.next();
   }
 
   onDelete(event) {
@@ -86,7 +88,7 @@ export class ListComponent implements OnInit {
     }).then(result => {
       if (result.value) {
         swalDeleted.fire({});
-        this.getAllRecords$.next();
+        this.load$.next();
       }
     });
   }
