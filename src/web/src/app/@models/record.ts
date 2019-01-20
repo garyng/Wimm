@@ -1,21 +1,21 @@
 import { ModelFilter } from './model-filter';
 import { Category } from './category';
 
-export class Record extends ModelFilter {
+export class Record {
 
   constructor(
-    public id: number = 0,
-    public amount: number = 0.0,
-    public description: string = '',
-    public currency: string = '',
-    public categoryId: number = 0,
-    public category: Category,
-    public userId: number = 0,
-    public timestamp: number = 0,
-    public createdAt: Date = new Date(),
-    public updatedAt: Date = new Date(),
+    public id?: number,
+    public amount?: number,
+    public description?: string,
+    public currency?: string,
+    public categoryId?: number,
+    public category?: Category,
+    public userId?: number,
+    public timestamp?: number,
+    public createdAt?: Date,
+    public updatedAt?: Date,
+    public rateToLocal?: number,
     ) {
-    super();
   }
 
   public static create(rawObj: Record): Record {
@@ -25,11 +25,12 @@ export class Record extends ModelFilter {
         rawObj.description,
         rawObj.currency,
         rawObj.categoryId,
-        new Category(),
+        rawObj.category,
         rawObj.userId,
         rawObj.timestamp,
         rawObj.createdAt,
-        rawObj.updatedAt
+        rawObj.updatedAt,
+        0
     );
   }
 
