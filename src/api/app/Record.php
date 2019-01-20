@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Record extends Model
 {
-    protected $fillable = ['amount', 'description', 'category_id', 'timestamp', 'currency'];
+    protected $fillable = ['amount', 'description', 'category_id', 'timestamp', 'currency', 'user_id'];
 
     public function user()
     {

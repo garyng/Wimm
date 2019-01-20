@@ -20,7 +20,7 @@ class CreateRecurrencesTable extends Migration
             $table->decimal('amount');
             $table->text('description');
             $table->string('frequency');
-            $table->unsignedInteger('next_timestamp'); // timestamps in seconds
+            $table->unsignedBigInteger('next_timestamp'); // timestamps in ms
             $table->string('currency');
             $table->timestamps();
         });

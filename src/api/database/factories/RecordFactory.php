@@ -8,7 +8,7 @@ $factory->define(\App\Record::class, function (Faker $faker) {
         'description' => $faker->sentence(),
         'category_id' => $faker->randomElement(\App\Category::all())->id,
         'user_id' => $faker->randomElement(\App\User::all())->id,
-        'timestamp' => $faker->dateTimeBetween('-10 days', 'now')->getTimestamp(),
+        'timestamp' => $faker->dateTimeBetween('-10 days', 'now')->getTimestamp() * 1000,
         'currency' => 'MYR'
     ];
 });

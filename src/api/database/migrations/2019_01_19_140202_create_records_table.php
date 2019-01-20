@@ -16,11 +16,11 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('amount');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('currency');
             $table->integer('category_id');
             $table->integer('user_id');
-            $table->unsignedInteger('timestamp');
+            $table->unsignedBigInteger('timestamp');
             $table->timestamps();
         });
     }
