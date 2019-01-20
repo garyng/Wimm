@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
   <nb-card-header>New record</nb-card-header>
   <nb-card-body>
     <!-- expenses/income toggle group -->
@@ -32,16 +32,23 @@
                   <i class="fas fa-plus"></i>
                 </span>
               </ng-template>
-              <input type="number" class="form-control" placeholder="Amount" />
+              <input type="number" [(ngModel)]="amount" class="form-control" placeholder="Amount" />
             </div>
           </div>
           <div class="col-sm-4">
             <!-- currencies -->
             <div class="input-group">
               <select class="form-control" [(ngModel)]="selectedCurrency">
-                <option *ngFor="let c of currencies" [ngValue]="c">{{ c }}</option>
+                <option *ngFor="let currency of currencies" [ngValue]="currency.code">
+                  <div *ngIf="currency.code != defaultCurrency && currency.rateToLocal * amount > 0; then showRate else showCurrency"></div>
+                  <ng-template #showRate>
+                    {{ currency.code }} (= {{ currency.rateToLocal * amount  | currency:defaultCurrency }})
+                  </ng-template>
+                  <ng-template #showCurrency>
+                      {{ currency.code }}
+                    </ng-template>
+                </option>
               </select>
-              <div *ngIf="selectedCurrency !== defaultCurrency">todo: show conversion rate</div>
             </div>
           </div>
         </div>
@@ -51,7 +58,7 @@
             <!-- category -->
             <div class="input-group">
               <select class="form-control" [(ngModel)]="selectedCategory">
-                <option *ngFor="let c of categories" [ngValue]="c">{{ c }}</option>
+                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
               </select>
             </div>
           </div>
@@ -78,7 +85,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-          <button nbButton hero fullWidth status="primary">Add</button>
+          <button nbButton hero fullWidth status="primary" (click)="onAdd()">Add</button>
       </div>
     </div>
   </nb-card-body>
