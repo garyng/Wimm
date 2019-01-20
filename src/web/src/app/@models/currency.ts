@@ -8,6 +8,7 @@ export class Currency extends ModelFilter {
     public name: string = '',
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
+    public rateToLocal: number = 1,
     ) {
     super();
   }
@@ -19,6 +20,7 @@ export class Currency extends ModelFilter {
         rawObj.name,
         rawObj.createdAt,
         rawObj.updatedAt,
+        rawObj.rateToLocal
     );
   }
 

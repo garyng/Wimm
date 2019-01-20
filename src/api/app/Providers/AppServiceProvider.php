@@ -23,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
             \App\Category::class => \App\Transformers\CategoryTransformer::class,
             \App\Budget::class => \App\Transformers\BudgetTransformer::class,
             \App\User::class => \App\Transformers\UserTransformer::class,
-            \App\Recurrence::class => \App\Transformers\RecurrenceTransformer::class
+            \App\Recurrence::class => \App\Transformers\RecurrenceTransformer::class,
+            \App\Currency::class => \App\Transformers\CurrencyTransformer::class
         ]);
     }
 
