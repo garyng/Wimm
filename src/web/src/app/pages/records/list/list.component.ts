@@ -8,6 +8,8 @@ import { tap, flatMap } from 'rxjs/operators';
 import { Category } from 'src/app/@models/category';
 import { swalDelete, swalDeleted } from 'src/app/@common/swal-mixins';
 import { SpinnerService } from 'src/app/@services/spinner.service';
+import { SwalService } from 'src/app/@services/swal.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-list',
@@ -54,21 +56,45 @@ export class ListComponent implements OnInit {
         title: 'Category',
         valuePrepareFunction: (cell: Category, row: Record) => {
           return cell.name;
+        },
+        compareFunction: (direction: number, a: Category, b: Category) => {
+          if (a.id < b.id) {
+            return -1 * direction;
+          } if (a.id > b.id) {
+            return direction;
+          }
+          return 0;
+        },
+      },
+      timestamp: {
+        title: 'Date',
+        valuePrepareFunction: (cell: number, row: Record) => {
+          return moment(cell).format('LL');
+        },
+        filterFunction: (cell: number, search: string) => {
+          return moment(cell).format('LL').toLowerCase().includes(search.toLowerCase());
         }
       }
     }
   };
 
-  constructor(private recordsRepo: RecordsRepository, private onError: ErrorsHandler, public spinner: SpinnerService) {
+  constructor(private recordsRepo: RecordsRepository,
+    private onError: ErrorsHandler,
+    public spinner: SpinnerService,
+    private swalService: SwalService) {
     this.load$
       .pipe(
         tap(_ => this.spinner.show()),
         tap(_ => this.allRecords.empty),
         flatMap(_ => this.recordsRepo.getAll()),
         tap(records => this.allRecords.load(records))
-      )
-      .subscribe(_ => this.spinner.hide(),
-        error => this.onError.notify(error));
+      ).subscribe(_ => {
+        this.spinner.hide();
+      }, error => {
+        this.onError.notify(error);
+        this.spinner.hide();
+      });
+
     this.load$.next();
   }
 
@@ -80,16 +106,13 @@ export class ListComponent implements OnInit {
 
   onDelete(event) {
     const data: Record = event.data;
-    swalDelete.fire({
-      text: `Delete record #${data.id}?`,
-      preConfirm: () =>
-        this.recordsRepo.delete(data.id)
-          .subscribe(_ => { }, error => this.onError.notify(error))
-    }).then(result => {
-      if (result.value) {
-        swalDeleted.fire({});
-        this.load$.next();
-      }
-    });
+    this.swalService.fire(
+      swalDelete.mixin({
+        text: `Delete record #${data.id}?`
+      }),
+      this.recordsRepo.delete(data.id),
+      _ => { },
+      _ => { },
+      () => swalDeleted.fire({}).then(value => this.load$.next()));
   }
 }
