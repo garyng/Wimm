@@ -18,7 +18,7 @@ export class ErrorsHandler {
     destroyByClick: true,
     duration: 3000,
     hasIcon: true,
-    preventDuplicates: true,
+    preventDuplicates: false,
   };
 
   // todo: deserialize errors
