@@ -1,8 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { takeWhile, tap, flatMap } from 'rxjs/operators';
-import { OrdersProfitChartService } from './orders-profit-chart.service';
-import { OrdersChart } from './orders-chart.service';
-import { ProfitChart } from './profit-chart.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { tap, flatMap } from 'rxjs/operators';
 import { RecordsRepository } from 'src/app/@services/repository-base';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -22,9 +19,7 @@ export class ChartSummary {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-
-  private alive = true;
+export class DashboardComponent implements OnInit {
 
   chartSummary: ChartSummary[];
 
@@ -32,93 +27,39 @@ export class DashboardComponent implements OnInit, OnDestroy {
   monthlyExpenses: ChartData;
   yearlyExpenses: ChartData;
 
-  // todo: remove
-  ordersChartData: OrdersChart;
-  profitChartData: ProfitChart;
-
-  // @ViewChild('ordersChart') ordersChart: OrdersChartComponent;
-  // @ViewChild('profitChart') profitChart: ProfitChartComponent;
-
   @ViewChild('weeklyChart') weeklyChart: ChartComponent;
   @ViewChild('monthlyChart') monthlyChart: ChartComponent;
   @ViewChild('yearlyChart') yearlyChart: ChartComponent;
 
-  loadChart$: ReplaySubject<{}> = new ReplaySubject();
+  load$: ReplaySubject<{}> = new ReplaySubject();
 
-  constructor(private ordersProfitChartService: OrdersProfitChartService,
+  constructor(private recordsRepo: RecordsRepository,
     private onError: ErrorsHandler,
-    private recordsRepo: RecordsRepository,
     public spinner: SpinnerService) {
 
-    // todo: remove
-    this.ordersProfitChartService.getOrderProfitChartSummary()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((summary) => {
-        // this.chartPanelSummary = summary;
-      });
-
-    // this.getOrdersChartData(this.period);
-    // this.getProfitChartData(this.period);
-
-    this.loadChart$
+    this.load$
       .pipe(
-        tap(_ => this.spinner.show()),
-        flatMap(_ => this.recordsRepo.getAll()),
+        tap(__ => this.spinner.show()),
+        flatMap(__ => this.recordsRepo.getAll()),
         tap(records => {
           this.weeklyExpenses = this.aggregateRecords(records, 'w', 'd', 'DD MMM');
           this.monthlyExpenses = this.aggregateRecords(records, 'M', 'w', 'DD MMM');
           this.yearlyExpenses = this.aggregateRecords(records, 'y', 'M', 'DD MMM');
-        })
+          this.generateSummary(records);
+        }),
+        tap(__ => this.spinner.hide())
       )
-      .subscribe(
-        _ => {
-          this.spinner.hide();
-        },
-        error => {
-          this.onError.notify(error);
-          this.spinner.hide();
-        }
-      );
+      .subscribe(__ => {
+        this.resizeCharts();
+       }, error => {
+        this.onError.notify(error);
+      });
 
-      this.loadChart$.next();
+    this.load$.next();
   }
 
   onRefresh() {
-    this.loadChart$.next();
-    this.recordsRepo.getAll().subscribe(records => {
-      // const todayTotal = _.chain(records)
-      //   .filter(record => moment(record.timestamp).isSame(new Date(), 'day'))
-      //   .sumBy(record => record.localAmount)
-      //   .value();
-
-      // const thisWeekTotal = _.chain(records)
-      //   .filter(record => moment(record.timestamp).isSame(new Date(), 'week'))
-      //   .sumBy(record => record.localAmount)
-      //   .value();
-
-      // const thisMonthTotal = _.chain(records)
-      //   .filter(record => moment(record.timestamp).isSame(new Date(), 'month'))
-      //   .sumBy(record => record.localAmount)
-      //   .value();
-      // // todo: calculate expenses
-      // // todo: resize chart after loading data
-      // this.chartSummary = [
-      //   {
-      //     title: 'Today',
-      //     amount: todayTotal
-      //   },
-      //   {
-      //     title: 'This Week',
-      //     amount: thisWeekTotal
-      //   },
-      //   {
-      //     title: 'This Month',
-      //     amount: thisMonthTotal
-      //   }
-      // ];
-
-      // calculating balances
-    });
+    this.load$.next();
   }
 
   aggregateRecords(records: Record[], period: any, periodUnit: any, dateFormat: string): ChartData {
@@ -132,7 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     const thisPeriodData = thisPeriodRecords
       .groupBy(record => moment(record.timestamp).get(periodUnit))
-      .map((r, k) => <ChartTempType>{
+      .map((r) => <ChartTempType>{
         amount: _.sumBy(r, record => record.localAmount),
         date: moment(r[0].timestamp)
       });
@@ -154,16 +95,38 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
   }
 
+  generateSummary(records: Record[]) {
+    const today = this.aggregateTotals(records, 'd');
+    const thisWeek = this.aggregateTotals(records, 'w');
+    const thisMonth = this.aggregateTotals(records, 'M');
+    const thisYear = this.aggregateTotals(records, 'y');
 
-  // todo: change period
-  // setPeriodAndGetChartData(value: string): void {
-  //   if (this.period !== value) {
-  //     this.period = value;
-  //   }
+    this.chartSummary = [
+      {
+        title: 'Today',
+        amount: today
+      },
+      {
+        title: 'This Week',
+        amount: thisWeek
+      },
+      {
+        title: 'This Month',
+        amount: thisMonth
+      },
+      {
+        title: 'This Year',
+        amount: thisYear
+      }
+    ];
+  }
 
-  //   this.getOrdersChartData(value);
-  //   this.getProfitChartData(value);
-  // }
+  aggregateTotals(records: Record[], period: any): number {
+    return _.chain(records)
+      .filter(record => moment(record.timestamp).isSame(new Date(), period))
+      .sumBy(record => record.localAmount)
+      .value();
+  }
 
   onTabChanged(selectedTab) {
     switch (selectedTab.tabTitle) {
@@ -171,32 +134,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.weeklyChart.resizeChart();
         break;
       case 'Monthly':
-      this.monthlyChart.resizeChart();
+        this.monthlyChart.resizeChart();
         break;
       case 'Yearly':
-      this.yearlyChart.resizeChart();
+        this.yearlyChart.resizeChart();
         break;
     }
   }
 
-  getOrdersChartData(period: string) {
-    this.ordersProfitChartService.getOrdersChartData(period)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(ordersChartData => {
-        this.ordersChartData = ordersChartData;
-      });
-  }
-
-  getProfitChartData(period: string) {
-    this.ordersProfitChartService.getProfitChartData(period)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(profitChartData => {
-        this.profitChartData = profitChartData;
-      });
-  }
-
-  ngOnDestroy() {
-    this.alive = false;
+  resizeCharts() {
+    this.weeklyChart.resizeChart();
+    this.monthlyChart.resizeChart();
+    this.yearlyChart.resizeChart();
   }
 
   ngOnInit() {

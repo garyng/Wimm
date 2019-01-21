@@ -5,14 +5,6 @@
   </nb-card-header>
 
   <nb-tabset fullWidth (changeTab)="onTabChanged($event)">
-    <!-- <nb-tab tabTitle="Orders">
-      <div class="chart-container">
-        <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
-        <ngx-chart-panel-header [type]="period" (periodChange)="setPeriodAndGetChartData($event)">
-        </ngx-chart-panel-header>
-        <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
-      </div>
-    </nb-tab> -->
     <nb-tab tabTitle="Weekly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="chartSummary"></ngx-chart-panel-summary>
@@ -32,15 +24,4 @@
           </div>
         </nb-tab>
   </nb-tabset>
-
-  <!-- <nb-card-body>
-    <div class="chart-container">
-      <ngx-chart-panel-header [type]="period" (periodChange)="setPeriodAndGetChartData($event)"></ngx-chart-panel-header>
-      <app-chart #ordersChart [ordersChartData]="ordersChartData"></app-chart>
-      <app-chart [chartData]="expensesChartData"></app-chart>
-    </div>
-  </nb-card-body>
-  <ngx-chart-panel-summary [summary]="chartSummary"></ngx-chart-panel-summary> -->
-
-  <!-- Expenses -->
 </nb-card>
