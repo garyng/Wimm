@@ -1,4 +1,3 @@
-import { ModelFilter } from './model-filter';
 import { Category } from './category';
 import { User } from './user';
 

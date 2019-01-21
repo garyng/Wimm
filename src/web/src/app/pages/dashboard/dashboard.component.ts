@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { takeWhile, tap, flatMap } from 'rxjs/operators';
 import { OrdersProfitChartService } from './orders-profit-chart.service';
 import { OrdersChart } from './orders-chart.service';
 import { ProfitChart } from './profit-chart.service';
@@ -7,7 +7,10 @@ import { RecordsRepository } from 'src/app/@services/repository-base';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { SpinnerService } from 'src/app/@services/spinner.service';
-import { ChartData } from './chart/chart.component';
+import { ChartData, ChartComponent } from './chart/chart.component';
+import { ReplaySubject } from 'rxjs';
+import { Record } from 'src/app/@models/Record';
+import { ErrorsHandler } from 'src/app/@services/errors-handler';
 
 export class ChartSummary {
   public title: string;
@@ -24,19 +27,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private alive = true;
 
   chartSummary: ChartSummary[];
-  expensesChartData: ChartData;
 
-  period = 'week';
+  weeklyExpenses: ChartData;
+  monthlyExpenses: ChartData;
+  yearlyExpenses: ChartData;
 
   // todo: remove
   ordersChartData: OrdersChart;
   profitChartData: ProfitChart;
 
-  // todo: remove
   // @ViewChild('ordersChart') ordersChart: OrdersChartComponent;
   // @ViewChild('profitChart') profitChart: ProfitChartComponent;
 
+  @ViewChild('weeklyChart') weeklyChart: ChartComponent;
+  @ViewChild('monthlyChart') monthlyChart: ChartComponent;
+  @ViewChild('yearlyChart') yearlyChart: ChartComponent;
+
+  loadChart$: ReplaySubject<{}> = new ReplaySubject();
+
   constructor(private ordersProfitChartService: OrdersProfitChartService,
+    private onError: ErrorsHandler,
     private recordsRepo: RecordsRepository,
     public spinner: SpinnerService) {
 
@@ -47,11 +57,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // this.chartPanelSummary = summary;
       });
 
-    this.getOrdersChartData(this.period);
-    this.getProfitChartData(this.period);
+    // this.getOrdersChartData(this.period);
+    // this.getProfitChartData(this.period);
+
+    this.loadChart$
+      .pipe(
+        tap(_ => this.spinner.show()),
+        flatMap(_ => this.recordsRepo.getAll()),
+        tap(records => {
+          this.weeklyExpenses = this.aggregateRecords(records, 'w', 'd', 'DD MMM');
+          this.monthlyExpenses = this.aggregateRecords(records, 'M', 'w', 'DD MMM');
+          this.yearlyExpenses = this.aggregateRecords(records, 'y', 'M', 'DD MMM');
+        })
+      )
+      .subscribe(
+        _ => {
+          this.spinner.hide();
+        },
+        error => {
+          this.onError.notify(error);
+          this.spinner.hide();
+        }
+      );
+
+      this.loadChart$.next();
   }
 
   onRefresh() {
+    this.loadChart$.next();
     this.recordsRepo.getAll().subscribe(records => {
       // const todayTotal = _.chain(records)
       //   .filter(record => moment(record.timestamp).isSame(new Date(), 'day'))
@@ -85,75 +118,66 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // ];
 
       // calculating balances
-      const thisWeekRecords = _.chain(records)
-      .groupBy(record => moment(record.timestamp).diff(today, 'w') === 0)
+    });
+  }
+
+  aggregateRecords(records: Record[], period: any, periodUnit: any, dateFormat: string): ChartData {
+    const thisPeriodRecords = _.chain(records)
+      .groupBy(record => moment(record.timestamp).diff(today, period) === 0)
       .get('true');
+    interface ChartTempType {
+      amount: number;
+      date: moment.Moment;
+    }
 
-
-      interface ChartTempType {
-        amount: number;
-        date: moment.Moment;
-      }
-
-      const thisWeekData = thisWeekRecords
-      .groupBy(record => moment(record.timestamp).dayOfYear())
+    const thisPeriodData = thisPeriodRecords
+      .groupBy(record => moment(record.timestamp).get(periodUnit))
       .map((r, k) => <ChartTempType>{
         amount: _.sumBy(r, record => record.localAmount),
-        date: moment(r[0].timestamp) // .format('DD/MM')
+        date: moment(r[0].timestamp)
       });
 
-      // or just path the empty object with the new one?
-
-      const today = moment().endOf('d');
-      const lastWeek = today.clone().subtract(1, 'w');
-      const data: ChartTempType[] = [];
-      for (const day = lastWeek; day.isBefore(today); day.add(1, 'd')) {
-        const updatedAmount = _.chain(thisWeekData).find((d: ChartTempType) => d.date.isSame(day, 'd')).get('amount').value() || 0;
-        data.push({
-          amount: updatedAmount,
-          date: day.clone()
-        });
-      }
-
-      // ({
-      //   amount: _.sumBy(r, record => record.localAmount),
-      //   date: moment(r[0].timestamp).format('DD/MM')
-      // })
-      // .map((r, k) => [
-      //   moment(r[0].timestamp).format('DD/MM'),
-      //   _.sumBy(r, record => record.localAmount),
-      // ])
-      // const data = new Map<string, number>(thisWeekData.value());
-
-
-
-      // todo: still need to fill in the missing dates
-
-      this.expensesChartData = {
-        labels: data.map(d => d.date.format('DD/MM')),
-        data: data.map(d => d.amount)
-      };
-    });
+    const today = moment().endOf('d');
+    const lastPeriod = today.clone().subtract(1, period);
+    const data: ChartTempType[] = [];
+    for (const date = lastPeriod; date.isSameOrBefore(today); date.add(1, periodUnit)) {
+      const updatedAmount = _.chain(thisPeriodData)
+        .find((d: ChartTempType) => d.date.isSame(date, periodUnit)).get('amount').value() || 0;
+      data.push({
+        amount: updatedAmount,
+        date: date.clone()
+      });
+    }
+    return {
+      labels: data.map(d => d.date.format(dateFormat)),
+      data: data.map(d => d.amount)
+    };
   }
 
 
   // todo: change period
-  setPeriodAndGetChartData(value: string): void {
-    if (this.period !== value) {
-      this.period = value;
-    }
-
-    this.getOrdersChartData(value);
-    this.getProfitChartData(value);
-  }
-
-  // changeTab(selectedTab) {
-  //   if (selectedTab.tabTitle === 'Profit') {
-  //     this.profitChart.resizeChart();
-  //   } else {
-  //     this.ordersChart.resizeChart();
+  // setPeriodAndGetChartData(value: string): void {
+  //   if (this.period !== value) {
+  //     this.period = value;
   //   }
+
+  //   this.getOrdersChartData(value);
+  //   this.getProfitChartData(value);
   // }
+
+  onTabChanged(selectedTab) {
+    switch (selectedTab.tabTitle) {
+      case 'Weekly':
+        this.weeklyChart.resizeChart();
+        break;
+      case 'Monthly':
+      this.monthlyChart.resizeChart();
+        break;
+      case 'Yearly':
+      this.yearlyChart.resizeChart();
+        break;
+    }
+  }
 
   getOrdersChartData(period: string) {
     this.ordersProfitChartService.getOrdersChartData(period)

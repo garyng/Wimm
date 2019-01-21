@@ -6,20 +6,20 @@ $legend-canceled-color: #3f4fda;
 
 @include nb-install-component() {
 
-  // /deep/ nb-tabset {
-  //   display: flex;
-  //   flex-direction: column;
-  //   flex: 1;
+  /deep/ nb-tabset {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-  //   ul {
-  //     border-bottom: none;
-  //   }
-  // }
+    ul {
+      border-bottom: none;
+    }
+  }
 
-  // nb-card {
-  //   flex: 1;
-  //   padding-bottom: 1.25rem;
-  // }
+  nb-tab {
+    flex: 1;
+    padding-bottom: 1.25rem;
+  }
 
   .chart-container {
     flex: 1;

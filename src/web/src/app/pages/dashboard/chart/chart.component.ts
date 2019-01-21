@@ -56,9 +56,9 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   setChartOptions(chartTheme) {
     this.option = {
       grid: {
-        left: 40,
+        left: 50,
         top: 20,
-        right: 20,
+        right: 40,
         bottom: 40,
       },
       tooltip: {
