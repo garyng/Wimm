@@ -2,11 +2,11 @@
 
 @include nb-install-component() {
 
-  /deep/ nb-card-header {
-    .button-refresh i {
-      color: nb-theme(color-fg);
-    }
-  }
+  // /deep/ nb-card-header {
+  //   .button-refresh i {
+  //     color: nb-theme(color-fg);
+  //   }
+  // }
 
   // /deep/ ng2-st-tbody-edit-delete {
   //   // https://github.com/akveo/ng2-smart-table/issues/779#issuecomment-428494547

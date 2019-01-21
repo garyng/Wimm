@@ -97,7 +97,7 @@ export class AddComponent implements OnInit {
       userId: 0,
       createdAt: null,
       updatedAt: null,
-      rateToLocal: 0
+      localAmount: 0
     });
     this.swalService.fire(
       swalAdd.mixin({

@@ -11,6 +11,7 @@ import { ThemeModule } from 'src/app/@theme/theme.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ECommerceLegendChartComponent } from './legend-chart/legend-chart.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ECommerceLegendChartComponent } from './legend-chart/legend-chart.compo
     OrdersChartComponent,
     ChartPanelSummaryComponent,
     ChartPanelHeaderComponent,
-    ECommerceLegendChartComponent
+    ECommerceLegendChartComponent,
+    ChartComponent
   ],
   imports: [
     CommonModule,

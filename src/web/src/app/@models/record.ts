@@ -1,5 +1,6 @@
 import { ModelFilter } from './model-filter';
 import { Category } from './category';
+import { User } from './user';
 
 export class Record {
 
@@ -11,10 +12,11 @@ export class Record {
     public categoryId?: number,
     public category?: Category,
     public userId?: number,
+    public user?: User,
     public timestamp?: number,
     public createdAt?: Date,
     public updatedAt?: Date,
-    public rateToLocal?: number,
+    public localAmount?: number,
     ) {
   }
 
@@ -27,10 +29,11 @@ export class Record {
         rawObj.categoryId,
         rawObj.category,
         rawObj.userId,
+        rawObj.user,
         rawObj.timestamp,
         rawObj.createdAt,
         rawObj.updatedAt,
-        0
+        rawObj.localAmount
     );
   }
 

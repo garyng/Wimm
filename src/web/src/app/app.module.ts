@@ -19,6 +19,7 @@ import { AppConstants } from './@common/app.constants';
 import { AuthGuard } from './@services/auth.guard';
 import { NbAuth0AuthStrategy } from './auth0/NbAuth0AuthStrategy';
 import { NbAuthAuth0Token } from './auth0/NbAuthAuth0Token';
+import { CurrencyPipe } from '@angular/common';
 
 // only attach jwt token for api calls
 export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
@@ -62,6 +63,7 @@ export function excludeFromTokenInterceptor(req: HttpRequest<any>) {
     })
   ],
   providers: [
+    CurrencyPipe,
     AuthGuard,
     {
       provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
