@@ -1,9 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input } from '@angular/core';
-import { ProfitChart } from '../profit-chart.service';
+import { Component, AfterViewInit, OnDestroy, OnChanges, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { LayoutService } from 'src/app/@services/layout.service';
 import { takeWhile, delay } from 'rxjs/operators';
-import { OrdersChart } from '../orders-chart.service';
 
 export class ChartData {
   public labels: string[];
