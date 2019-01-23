@@ -23,7 +23,7 @@ export class ErrorsHandler {
     if (error instanceof Error) {
       this.toastrService.show(error.message, error.name, this.config);
     } else if (error instanceof HttpErrorResponse) {
-      if (error.status === HttpStatusCode.INTERNAL_SERVER_ERROR) {
+      if (error.status !== HttpStatusCode.UNPROCESSABLE_ENTITY) {
         const laravelError: {
           message: string,
           exception: string
