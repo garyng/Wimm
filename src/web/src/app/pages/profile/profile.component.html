@@ -1,0 +1,28 @@
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-body>
+    <nb-user size="xlarge" [name]="profile?.name" [title]="profile?.email" [picture]="profile?.picture">
+    </nb-user>
+  </nb-card-body>
+</nb-card>
+
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-header>
+    Default Currency
+  </nb-card-header>
+  <nb-card-body>
+    <div class="input-group">
+      <select class="form-control" [(ngModel)]="selectedCurrency">
+        <option *ngFor="let currency of currencies" [ngValue]="currency.code">
+          <div *ngIf="currency.code != defaultCurrency; then showRate else showCurrency"></div>
+          <ng-template #showRate>
+            {{ currency.code }} (= {{ currency.rateToLocal | currency:defaultCurrency }})
+          </ng-template>
+          <ng-template #showCurrency>
+            {{ currency.code }}
+          </ng-template>
+        </option>
+      </select>
+    </div>
+    <button nbButton hero fullWidth status="primary" (click)="onChangeCurrency()" [disabled]="selectedCurrency === defaultCurrency">Save</button>
+  </nb-card-body>
+</nb-card>

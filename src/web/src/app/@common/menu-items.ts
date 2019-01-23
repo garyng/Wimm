@@ -21,4 +21,9 @@ export const MENU_ITEM: NbMenuItem[] = [
       }
     ]
   },
+  {
+    title: 'Profile',
+    icon: 'nb-person',
+    link: '/app/profile'
+  },
 ];

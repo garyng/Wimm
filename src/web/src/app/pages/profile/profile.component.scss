@@ -1,0 +1,12 @@
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  .input-group {
+    margin-bottom: 1.5rem;
+
+    .input-group-addon {
+      padding: 0.75rem 1.125rem;
+    }
+  }
+}
