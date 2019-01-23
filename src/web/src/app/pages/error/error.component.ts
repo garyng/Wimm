@@ -74,6 +74,24 @@ export class ErrorComponent implements OnInit {
   }
 
   fireLaravelException() {
-    // ?
+//   {
+//     "headers": {
+//         "normalizedNames": {},
+//         "lazyUpdate": null
+//     },
+//     "status": 500,
+//     "statusText": "Internal Server Error",
+//     "url": "http://localhost:4200/api/recurrences",
+//     "ok": false,
+//     "name": "HttpErrorResponse",
+//     "message": "Http failure response for http://localhost:4200/api/recurrences: 500 Internal Server Error",
+//     "error": {
+//         "message": "SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'description' cannot be null (SQL: insert into `recurrences` (`user_id`, `category_id`, `amount`, `description`, `frequency`, `next_timestamp`, `currency`, `updated_at`, `created_at`) values (10, 1, -100, , daily, 1546358400000, MYR, 2019-01-23 18:07:58, 2019-01-23 18:07:58))",
+//         "exception": "Illuminate\\Database\\QueryException",
+//         "file": "/var/www/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+//         "line": 664,
+//         "trace": []
+//     }
+// }
   }
 }
