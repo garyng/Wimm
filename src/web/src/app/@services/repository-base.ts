@@ -131,8 +131,8 @@ export class UserRepository {
     );
   }
 
-  public updateCurrency(currency: string): Observable<User> {
-    return this.http.patch<ApiResponse<User>>(this.apiUrl, currency).pipe(
+  public updateCurrency(data: {currency: string}): Observable<User> {
+    return this.http.patch<ApiResponse<User>>(`${this.apiUrl}/currency`, data).pipe(
       map(response => response.data),
     );
   }
