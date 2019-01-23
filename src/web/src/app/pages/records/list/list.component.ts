@@ -6,7 +6,7 @@ import { ReplaySubject } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { tap, flatMap } from 'rxjs/operators';
 import { Category } from 'src/app/@models/category';
-import { swalDelete, swalDeleted } from 'src/app/@common/swal-mixins';
+import { swalWarning, swalDeleted } from 'src/app/@common/swal-mixins';
 import { SpinnerService } from 'src/app/@services/spinner.service';
 import { SwalService } from 'src/app/@services/swal.service';
 import * as moment from 'moment';
@@ -104,7 +104,7 @@ export class ListComponent implements OnInit {
   onDelete(event) {
     const data: Record = event.data;
     this.swalService.fire(
-      swalDelete.mixin({
+      swalWarning.mixin({
         text: `Delete record #${data.id}?`
       }),
       this.recordsRepo.delete(data.id),

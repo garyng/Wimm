@@ -8,7 +8,7 @@ import { ReplaySubject } from 'rxjs';
 import { ErrorsHandler } from 'src/app/@services/errors-handler';
 import { SpinnerService } from 'src/app/@services/spinner.service';
 import { Record } from 'src/app/@models/record';
-import { swalAdd, swalAdded } from 'src/app/@common/swal-mixins';
+import { swalQuestion, swalAdded } from 'src/app/@common/swal-mixins';
 import { SwalService } from 'src/app/@services/swal.service';
 
 enum RecordTypes {
@@ -100,7 +100,7 @@ export class AddComponent implements OnInit {
       localAmount: 0
     });
     this.swalService.fire(
-      swalAdd.mixin({
+      swalQuestion.mixin({
         text: 'Add a new record?'
       }),
       this.recordsRepo.add(record),

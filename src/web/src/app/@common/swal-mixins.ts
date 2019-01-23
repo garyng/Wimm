@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const swalDelete = Swal.mixin({
+export const swalWarning = Swal.mixin({
   type: 'warning',
   title: 'Are you sure?',
   text: `This is not reversible!`,
@@ -16,7 +16,7 @@ export const swalDeleted = Swal.mixin({
   type: 'success'
 });
 
-export const swalAdd = Swal.mixin({
+export const swalQuestion = Swal.mixin({
   type: 'question',
   title: 'Are you sure?',
   showCancelButton: true,
@@ -30,3 +30,4 @@ export const swalAdded = Swal.mixin({
   title: 'Added',
   type: 'success'
 });
+

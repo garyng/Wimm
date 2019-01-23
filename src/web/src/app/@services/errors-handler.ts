@@ -57,7 +57,7 @@ export class ErrorsHandler {
 
     if (error instanceof HttpErrorResponse) {
       const apiResponse = error.error as ApiResponse<any>;
-      if (apiResponse instanceof ApiResponse) {
+      if (apiResponse) {
         const errorResponse = error.error.error as ApiErrorResponse;
         if (error.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
           for (const key in errorResponse.fields) {

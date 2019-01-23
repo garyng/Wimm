@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { NbTokenService, NbAuthOAuth2JWTToken } from '@nebular/auth';
 import { JwtClaimNames } from 'src/app/@common/constants.g';
 import { LayoutService } from 'src/app/@services/layout.service';
-import { UserService } from 'src/app/@services/user.service';
+import { Auth0UserService } from 'src/app/@services/auth0.user.service';
 import * as Auth0 from 'auth0-js';
 
 @Component({
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   constructor(private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private layoutService: LayoutService,
-    private userService: UserService,
+    private userService: Auth0UserService,
     private router: Router) {
   }
   // todo: remove all commented code
@@ -33,13 +33,24 @@ export class HeaderComponent implements OnInit {
 
     this.menuService
       .onItemClick()
-      .pipe( filter(({ tag }) => tag === 'userMenu'), filter(({ item: { title } }) => title === 'Log out') )
-      .subscribe(_ => this.router.navigate(['auth/logout']));
+      .pipe(
+        filter(({ tag }) => tag === 'userMenu')
+      ).subscribe(({ item: { title } }) => this.onUserMenuItemClicked(title));
 
       this.userService.profile.subscribe(profile => {
         this.profile = profile;
       });
+  }
 
+  onUserMenuItemClicked(title) {
+    switch (title) {
+      case 'Log out':
+        this.router.navigate(['/auth/logout']);
+        break;
+      case 'Profile':
+        this.router.navigate(['/app/profile']);
+        break;
+    }
   }
 
   toggleSidebar(): boolean {

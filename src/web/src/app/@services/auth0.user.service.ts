@@ -9,7 +9,7 @@ import { NbAuthAuth0Token } from '../auth0/NbAuthAuth0Token';
   providedIn: 'root'
 })
 
-export class UserService {
+export class Auth0UserService {
   constructor(private tokenService: NbTokenService) {}
 
   get profile(): Observable<Auth0.Auth0UserProfile> {
