@@ -29,7 +29,6 @@ class StoreRecurrenceRequest extends FormRequest
             'amount' => 'required|numeric',
             'description' => 'nullable',
             'frequency' => [
-                'sometimes',
                 'required',
                 Rule::in(['daily', 'weekly', 'monthly', 'yearly'])
             ],
