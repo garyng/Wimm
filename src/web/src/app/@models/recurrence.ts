@@ -1,34 +1,40 @@
-import { ModelFilter } from './model-filter';
+import { Category } from "./category";
+import { User } from "./user";
 
-export class Recurrence extends ModelFilter {
+export class Recurrence {
 
   constructor(
-    public id: number = 0,
-    public userId: number = 0,
-    public categoryId: number = 0,
-    public amount: number = 0.0,
-    public description: string = '',
-    public frequency: string = '',
-    public nextTimestamp: number = 0,
-    public currency: string = '',
-    public createdAt: Date = new Date(),
-    public updatedAt: Date = new Date(),
-    ) {
-    super();
+    public id?: number,
+    public userId?: number,
+    public user?: User,
+    public categoryId?: number,
+    public category?: Category,
+    public amount?: number,
+    public description?: string,
+    public frequency?: string,
+    public nextTimestamp?: number,
+    public currency?: string,
+    public createdAt?: Date,
+    public updatedAt?: Date,
+    public localAmount?: number,
+  ) {
   }
 
   public static create(rawObj: Recurrence): Recurrence {
     return new Recurrence(
-        rawObj.id,
-        rawObj.userId,
-        rawObj.categoryId,
-        rawObj.amount,
-        rawObj.description,
-        rawObj.frequency,
-        rawObj.nextTimestamp,
-        rawObj.currency,
-        rawObj.createdAt,
-        rawObj.updatedAt,
+      rawObj.id,
+      rawObj.userId,
+      rawObj.user,
+      rawObj.categoryId,
+      rawObj.category,
+      rawObj.amount,
+      rawObj.description,
+      rawObj.frequency,
+      rawObj.nextTimestamp,
+      rawObj.currency,
+      rawObj.createdAt,
+      rawObj.updatedAt,
+      rawObj.localAmount
     );
   }
 

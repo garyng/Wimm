@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { NbDateService } from '@nebular/theme';
-import { CurrenciesRepository, UserRepository, CategoriesRepository, RecordsRepository } from 'src/app/@services/repository-base';
-import { tap, flatMap } from 'rxjs/operators';
+import { RecordTypes } from '../../records/add/add.component';
 import { Currency } from 'src/app/@models/currency';
 import { Category } from 'src/app/@models/category';
 import { ReplaySubject } from 'rxjs';
+import { NbDateService } from '@nebular/theme';
+import { CurrenciesRepository, CategoriesRepository, UserRepository, RecurrencesRepository } from 'src/app/@services/repository-base';
 import { ErrorsHandler } from 'src/app/@services/errors-handler';
 import { SpinnerService } from 'src/app/@services/spinner.service';
-import { Record } from 'src/app/@models/record';
-import { swalQuestion, swalAdded } from 'src/app/@common/swal-mixins';
 import { SwalService } from 'src/app/@services/swal.service';
+import { tap, flatMap } from 'rxjs/operators';
+import { swalQuestion, swalAdded } from 'src/app/@common/swal-mixins';
+import { Recurrence } from 'src/app/@models/recurrence';
+import * as moment from 'moment';
 
-export enum RecordTypes {
-  expense = 'expense',
-  income = 'income'
+export enum Frequencies {
+  daily = 'daily',
+  weekly = 'weekly',
+  monthly = 'monthly',
+  yearly = 'yearly'
 }
-
 
 @Component({
   selector: 'app-add',
@@ -23,6 +26,10 @@ export enum RecordTypes {
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
+
+  frequency: keyof typeof Frequencies;
+  frequencies = Frequencies;
+
   recordType: keyof typeof RecordTypes = 'expense';
   recordTypes = RecordTypes;
 
@@ -44,7 +51,7 @@ export class AddComponent implements OnInit {
     private currenciesRepo: CurrenciesRepository,
     private categoriesRepo: CategoriesRepository,
     private userRepo: UserRepository,
-    private recordsRepo: RecordsRepository,
+    private recurrencesRepo: RecurrencesRepository,
     private onError: ErrorsHandler,
     public spinner: SpinnerService,
     private swalService: SwalService
@@ -79,19 +86,22 @@ export class AddComponent implements OnInit {
     this.load$.next();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onAdd() {
     let normalizedAmount = Math.abs(this.amount);
     if (this.recordType === RecordTypes.expense) {
       normalizedAmount *= -1;
     }
-    const record = Record.create({
+    const nextTimestamp = this.calculateNextTimestamp(this.selectedDate.valueOf(), Frequencies[this.frequency]);
+    const recurrence = Recurrence.create({
       amount: normalizedAmount,
       description: this.description,
       currency: this.selectedCurrency,
       categoryId: this.selectedCategory && this.selectedCategory.id,
-      timestamp: this.selectedDate.valueOf(), // milliseconds
+      nextTimestamp: nextTimestamp,
+      frequency: Frequencies[this.frequency],
       id: 0,
       category: null,
       userId: 0,
@@ -101,13 +111,32 @@ export class AddComponent implements OnInit {
     });
     this.swalService.fire(
       swalQuestion.mixin({
-        text: 'Add a new record?'
+        text: 'Add a new recurring record?'
       }),
-      this.recordsRepo.add(record),
+      this.recurrencesRepo.add(recurrence),
       _ => this.reset(),
       _ => { },
       () => swalAdded.fire({})
     );
+  }
+
+  calculateNextTimestamp(startingTimestamp: number, frequency: Frequencies): number {
+    let unit: any;
+    switch (frequency) {
+      case Frequencies.daily:
+        unit = 'd';
+        break;
+      case Frequencies.weekly:
+        unit = 'w';
+        break;
+      case Frequencies.monthly:
+        unit = 'M';
+        break;
+      case Frequencies.yearly:
+        unit = 'y';
+        break;
+    }
+    return moment(startingTimestamp).add(1, unit).valueOf();
   }
 
   reset() {
@@ -115,5 +144,7 @@ export class AddComponent implements OnInit {
     this.description = '';
     this.selectedDate = this.dateService.today();
     this.recordType = RecordTypes.expense;
+    this.frequency = Frequencies.monthly;
   }
+
 }

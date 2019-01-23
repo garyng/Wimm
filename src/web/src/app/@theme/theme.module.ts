@@ -66,6 +66,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { NbMomentDateModule } from '@nebular/moment';
+import { StringEnumPipe } from '../pipes/string-enum.pipe';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -130,6 +131,7 @@ const PIPES = [
   TimingPipe,
   NumberWithCommasPipe,
   EvaIconsPipe,
+  StringEnumPipe
 ];
 
 const NB_THEME_PROVIDERS = [

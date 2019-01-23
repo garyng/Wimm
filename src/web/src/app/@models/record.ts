@@ -16,23 +16,23 @@ export class Record {
     public createdAt?: Date,
     public updatedAt?: Date,
     public localAmount?: number,
-    ) {
+  ) {
   }
 
   public static create(rawObj: Record): Record {
     return new Record(
-        rawObj.id,
-        rawObj.amount,
-        rawObj.description,
-        rawObj.currency,
-        rawObj.categoryId,
-        rawObj.category,
-        rawObj.userId,
-        rawObj.user,
-        rawObj.timestamp,
-        rawObj.createdAt,
-        rawObj.updatedAt,
-        rawObj.localAmount
+      rawObj.id,
+      rawObj.amount,
+      rawObj.description,
+      rawObj.currency,
+      rawObj.categoryId,
+      rawObj.category,
+      rawObj.userId,
+      rawObj.user,
+      rawObj.timestamp,
+      rawObj.createdAt,
+      rawObj.updatedAt,
+      rawObj.localAmount
     );
   }
 

@@ -11,12 +11,21 @@ const routes: Routes = [{
       loadChildren: './records/records.module#RecordsModule'
     },
     {
+      path: 'recurrences',
+      loadChildren: './recurrences/recurrences.module#RecurrencesModule'
+    },
+    {
       path: 'dashboard',
       loadChildren: './dashboard/dashboard.module#DashboardModule'
     },
     {
       path: 'profile',
       loadChildren: './profile/profile.module#ProfileModule'
+    },
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full'
     }
   ]
 }];

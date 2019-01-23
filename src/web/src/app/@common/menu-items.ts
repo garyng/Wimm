@@ -22,6 +22,34 @@ export const MENU_ITEM: NbMenuItem[] = [
     ]
   },
   {
+    title: 'Budgets',
+    icon: 'nb-notifications',
+    children: [
+      {
+        title: 'All Budgets',
+        link: '/app/budgets/list',
+      },
+      {
+        title: 'Set New Budget',
+        link: '/app/budgets/add',
+      }
+    ]
+  },
+  {
+    title: 'Recurrences',
+    icon: 'nb-loop',
+    children: [
+      {
+        title: 'All Recurrences',
+        link: '/app/recurrences/list',
+      },
+      {
+        title: 'Add Recurrences',
+        link: '/app/recurrences/add',
+      }
+    ]
+  },
+  {
     title: 'Profile',
     icon: 'nb-person',
     link: '/app/profile'
