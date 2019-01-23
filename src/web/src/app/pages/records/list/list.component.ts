@@ -40,18 +40,6 @@ export class ListComponent implements OnInit {
     //   title: '<i class="nb-trash"></i>'
     // }]
     columns: {
-      id: {
-        title: '#'
-      },
-      description: {
-        title: 'Description'
-      },
-      amount: {
-        title: 'Amount',
-        valuePrepareFunction: (cell: number, row: Record) => {
-          return `${row.currency} ${cell.toFixed(2)}`;
-        }
-      },
       category: {
         title: 'Category',
         valuePrepareFunction: (cell: Category, row: Record) => {
@@ -65,6 +53,15 @@ export class ListComponent implements OnInit {
           }
           return 0;
         },
+      },
+      amount: {
+        title: 'Amount',
+        valuePrepareFunction: (cell: number, row: Record) => {
+          return `${row.currency} ${cell.toFixed(2)}`;
+        }
+      },
+      description: {
+        title: 'Description'
       },
       timestamp: {
         title: 'Date',

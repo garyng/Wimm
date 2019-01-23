@@ -1,27 +1,53 @@
 <nb-card size="large" [nbSpinner]="spinner?.isLoading$ | async">
   <nb-card-header>
     Balance
-    <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action>
+    <!-- <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action> -->
   </nb-card-header>
-
-  <nb-tabset fullWidth (changeTab)="onTabChanged($event)">
+  <nb-tabset fullWidth (changeTab)="onBalanceTabChanged($event)">
     <nb-tab tabTitle="Weekly">
       <div class="chart-container">
-        <ngx-chart-panel-summary [summary]="chartSummary"></ngx-chart-panel-summary>
-        <app-chart #weeklyChart [chartData]="weeklyExpenses"></app-chart>
+        <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
+        <app-chart #weeklyBalanceChart [chartData]="weeklyBalance"></app-chart>
       </div>
     </nb-tab>
     <nb-tab tabTitle="Monthly" [lazyLoad]="true">
-        <div class="chart-container">
-          <ngx-chart-panel-summary [summary]="chartSummary"></ngx-chart-panel-summary>
-          <app-chart #monthlyChart [chartData]="monthlyExpenses"></app-chart>
-        </div>
-      </nb-tab>
-      <nb-tab tabTitle="Yearly" [lazyLoad]="true">
-          <div class="chart-container">
-            <ngx-chart-panel-summary [summary]="chartSummary"></ngx-chart-panel-summary>
-            <app-chart #yearlyChart [chartData]="yearlyExpenses"></app-chart>
-          </div>
-        </nb-tab>
+      <div class="chart-container">
+        <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
+        <app-chart #monthlyBalanceChart [chartData]="monthlyBalance"></app-chart>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="Yearly" [lazyLoad]="true">
+      <div class="chart-container">
+        <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
+        <app-chart #yearlyBalanceChart [chartData]="yearlyBalance"></app-chart>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</nb-card>
+<nb-card size="large" [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-header>
+    Expenses
+    <!-- <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action> -->
+  </nb-card-header>
+
+  <nb-tabset fullWidth (changeTab)="onExpensesTabChanged($event)">
+    <nb-tab tabTitle="Weekly">
+      <div class="chart-container">
+        <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
+        <app-chart #weeklyExpensesChart [chartData]="weeklyExpenses"></app-chart>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="Monthly" [lazyLoad]="true">
+      <div class="chart-container">
+        <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
+        <app-chart #monthlyExpensesChart [chartData]="monthlyExpenses"></app-chart>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="Yearly" [lazyLoad]="true">
+      <div class="chart-container">
+        <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
+        <app-chart #yearlyExpensesChart [chartData]="yearlyExpenses"></app-chart>
+      </div>
+    </nb-tab>
   </nb-tabset>
 </nb-card>
