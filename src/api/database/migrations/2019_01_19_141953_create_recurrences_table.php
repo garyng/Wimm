@@ -18,7 +18,7 @@ class CreateRecurrencesTable extends Migration
             $table->integer('user_id');
             $table->integer('category_id');
             $table->decimal('amount');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('frequency');
             $table->unsignedBigInteger('next_timestamp'); // timestamps in ms
             $table->string('currency');
