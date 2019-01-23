@@ -1,6 +1,5 @@
 import { ModelFilter } from './model-filter';
-
-export class Category extends ModelFilter {
+export class Category {
 
   constructor(
     public id: number = 0,
@@ -8,7 +7,6 @@ export class Category extends ModelFilter {
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     ) {
-    super();
   }
 
   public static create(rawObj: Category): Category {

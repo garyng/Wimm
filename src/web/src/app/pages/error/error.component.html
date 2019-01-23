@@ -1,0 +1,9 @@
+<nb-card>
+  <nb-card-header>Test error toastr</nb-card-header>
+  <nb-card-body>
+      <button nbButton hero fullWidth status="primary" (click)="fireGenericError()">Generic error</button>
+      <button nbButton hero fullWidth status="primary" (click)="fireHttpError()">Http error</button>
+      <button nbButton hero fullWidth status="primary" (click)="fireValidationError()">Validation error</button>
+      <button nbButton hero fullWidth status="primary" (click)="fireLaravelException()">Laravel exception</button>
+  </nb-card-body>
+</nb-card>

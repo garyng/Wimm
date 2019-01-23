@@ -23,6 +23,10 @@ const routes: Routes = [{
       loadChildren: './profile/profile.module#ProfileModule'
     },
     {
+      path: 'error',
+      loadChildren: './error/error.module#ErrorModule'
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full'

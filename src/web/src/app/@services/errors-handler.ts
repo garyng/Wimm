@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiResponse, ApiErrorResponse } from './repository-base';
 import HttpStatusCode from '../@common/http.status.code.enum';
-
 
 @Injectable({
   providedIn: 'root'
@@ -18,65 +16,45 @@ export class ErrorsHandler {
     destroyByClick: true,
     duration: 3000,
     hasIcon: true,
-    preventDuplicates: false,
+    preventDuplicates: false
   };
 
-  // todo: deserialize errors
   public notify(error: any) {
-    let title = 'Error!';
-    let body = JSON.stringify(error);
-
-  //   "error": {
-  //     "code": "unauthorized",
-  //     "message": "Wrong number of segments"
-  // }
-
-
-//   {
-//     "status": 422,
-//     "success": false,
-//     "error": {
-//         "code": "validation_failed",
-//         "message": "The given data failed to pass validation.",
-//         "fields": {
-//             "user_id": [
-//                 "The user id field is required."
-//             ],
-//             "category_id": [
-//                 "The category id field is required."
-//             ],
-//             "amount": [
-//                 "The amount field is required."
-//             ],
-//             "timestamp": [
-//                 "The timestamp field is required."
-//             ]
-//         }
-//     }
-// }
-
-    if (error instanceof HttpErrorResponse) {
-      const apiResponse = error.error as ApiResponse<any>;
-      if (apiResponse) {
-        const errorResponse = error.error.error as ApiErrorResponse;
-        if (error.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
-          for (const key in errorResponse.fields) {
-            if (errorResponse.fields.hasOwnProperty(key)) {
-              const element = errorResponse.fields[key] as any; // confused between Object's fields and the property fields
-              this.toastrService.show(element.join('\n'), 'Validation error!', this.config);
-            }
+    if (error instanceof Error) {
+      this.toastrService.show(error.message, error.name, this.config);
+    } else if (error instanceof HttpErrorResponse) {
+      const innerError: {
+        status: number;
+        success: boolean;
+        error: any;
+      } = error.error;
+      if (innerError.status === HttpStatusCode.UNPROCESSABLE_ENTITY) {
+        // validation error
+        const validationError: {
+          code: string;
+          message: string;
+          fields: any;
+        } = innerError.error;
+        for (const key in validationError.fields) {
+          if (validationError.fields.hasOwnProperty(key)) {
+            const element: string[] = validationError.fields[key];
+            this.toastrService.show(
+              element.join('\n'),
+              'Validation error!',
+              this.config
+            );
           }
-        } else {
-          this.toastrService.show(errorResponse.message, errorResponse.code, this.config);
         }
       } else {
-        title = error.statusText;
-        body = error.message;
-        this.toastrService.show(body, title, this.config);
+        // other error
+        const apiError: {
+          code: string;
+          message: string;
+        } = innerError.error;
+        this.toastrService.show(apiError.message, apiError.code, this.config);
       }
     } else {
-      this.toastrService.show(body, title, this.config);
+      this.toastrService.show(JSON.stringify(error), 'Error', this.config);
     }
-
   }
 }
