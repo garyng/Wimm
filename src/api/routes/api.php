@@ -25,7 +25,7 @@ Route::middleware('api')->group(function () {
 
         Route::prefix('user')->group(function () {
             Route::get('', 'UsersController@get');
-            Route::patch('/currencies', 'UsersController@currency');
+            Route::patch('/currency', 'UsersController@currency');
         });
 
         Route::prefix('currencies')->group(function() {
