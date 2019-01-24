@@ -1,0 +1,8 @@
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-header>
+    Daily Budgets
+  </nb-card-header>
+  <nb-card-body *ngFor="let budget of budgets">
+    <app-budget [budget]="budget" [allRecords]="records" [userCurrency]="userCurrency" (delete)="onDelete($event)"></app-budget>
+  </nb-card-body>
+</nb-card>

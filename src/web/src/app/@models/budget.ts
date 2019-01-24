@@ -1,12 +1,16 @@
+import { User } from "./user";
+import { Category } from "./category";
+
 export class Budget {
 
   constructor(
     public id?: number,
     public userId?: number,
-    public user?: number,
+    public user?: User,
     public categoryId?: number,
-    public category?: number,
+    public category?: Category,
     public limitPerDay?: number,
+    public localAmount?: number,
     public currency?: string,
     public createdAt?: Date,
     public updatedAt?: Date
@@ -21,6 +25,7 @@ export class Budget {
         rawObj.categoryId,
         rawObj.category,
         rawObj.limitPerDay,
+        rawObj.localAmount,
         rawObj.currency,
         rawObj.createdAt,
         rawObj.updatedAt,

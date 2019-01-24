@@ -82,6 +82,7 @@ export class AddComponent implements OnInit {
       userId: 0,
       user: null,
       category: null,
+      localAmount: 0,
       createdAt: null,
       updatedAt: null
     });

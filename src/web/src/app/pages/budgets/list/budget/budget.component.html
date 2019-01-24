@@ -1,0 +1,15 @@
+<div class="progress-info">
+  <div class="title">
+    {{ title }}
+    <nb-action icon="nb-trash" (click)="onDelete()"></nb-action>
+    <nb-badge *ngIf="isOverlimit" text="overlimit" status="danger"></nb-badge>
+  </div>
+  <div class="value">
+    {{ used | currency: userCurrency }}
+    <span class="amount">of {{ localLimitPerDay | currency: userCurrency }}</span>
+  </div>
+  <nb-progress-bar *ngIf="!isOverlimit" [value]="ratio * 100"></nb-progress-bar>
+  <div class="description">
+    <p>{{ ratio | percent }}</p>
+  </div>
+</div>
