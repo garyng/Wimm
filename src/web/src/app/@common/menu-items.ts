@@ -44,7 +44,7 @@ export const MENU_ITEM: NbMenuItem[] = [
         link: '/app/recurrences/list',
       },
       {
-        title: 'Add Recurrences',
+        title: 'Add Recurrence',
         link: '/app/recurrences/add',
       }
     ]
