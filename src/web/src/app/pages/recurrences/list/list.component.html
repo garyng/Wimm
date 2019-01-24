@@ -1,0 +1,8 @@
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-header>
+    Recurrences
+  </nb-card-header>
+  <nb-card-body *ngFor="let record of recurrences">
+    <app-recurrence [record]="record" [userCurrency]="userCurrency" (delete)="onDelete($event)" (update)="onUpdate($event)"></app-recurrence>
+  </nb-card-body>
+</nb-card>

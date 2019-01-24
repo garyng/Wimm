@@ -27,7 +27,7 @@ export enum Frequencies {
 })
 export class AddComponent implements OnInit {
 
-  frequency: keyof typeof Frequencies;
+  frequency: keyof typeof Frequencies = 'weekly';
   frequencies = Frequencies;
 
   recordType: keyof typeof RecordTypes = 'expense';
@@ -144,7 +144,6 @@ export class AddComponent implements OnInit {
     this.description = '';
     this.selectedDate = this.dateService.today();
     this.recordType = RecordTypes.expense;
-    this.frequency = Frequencies.monthly;
   }
 
 }

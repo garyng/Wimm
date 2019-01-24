@@ -56,7 +56,7 @@ export abstract class RepositoryBase<T> {
   }
 
   public update(id: number, data: T): Observable<T> {
-    return this.http.patch<ApiResponse<T>>(this.apiUrl, data).pipe(
+    return this.http.patch<ApiResponse<T>>(`${this.apiUrl}/${id}`, data).pipe(
       map(response => response.data),
     );
   }

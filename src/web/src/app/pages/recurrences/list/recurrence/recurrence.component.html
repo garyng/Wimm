@@ -1,0 +1,19 @@
+<div class="progress-info">
+  <div class="title">
+    {{ title }}
+    <nb-action icon="nb-trash" (click)="onDelete()"></nb-action>
+    <ng-container *ngIf="isOutdated">
+      <nb-action icon="nb-loop" (click)="onUpdate()"></nb-action>
+      <nb-badge text="overdue" status="danger"></nb-badge>
+    </ng-container>
+  </div>
+  <div class="value">
+    {{ amount | currency: currency }}
+    <span class="amount" *ngIf="userCurrency !== currency">{{ localAmount | currency: userCurrency }}</span>
+  </div>
+  <nb-progress-bar *ngIf="!isOutdated" [value]="percentage"></nb-progress-bar>
+  <div class="description">
+    <p>{{ nextTimestamp | amTimeAgo }}</p>
+    <p>{{ record.description }}</p>
+  </div>
+</div>
