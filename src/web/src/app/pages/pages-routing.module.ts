@@ -15,6 +15,10 @@ const routes: Routes = [{
       loadChildren: './recurrences/recurrences.module#RecurrencesModule'
     },
     {
+      path: 'budgets',
+      loadChildren: './budgets/budgets.module#BudgetsModule'
+    },
+    {
       path: 'dashboard',
       loadChildren: './dashboard/dashboard.module#DashboardModule'
     },

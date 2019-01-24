@@ -1,0 +1,61 @@
+<nb-card [nbSpinner]="spinner?.isLoading$ | async">
+  <nb-card-header>New budget</nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-sm-8">
+            <!-- limit per day -->
+            <div class="form-group">
+              <label>Limit per day</label>
+              <input type="number" [(ngModel)]="limitPerDay" class="form-control" placeholder="Limit per day" />
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <!-- currencies -->
+            <div class="form-group">
+              <label>Currency</label>
+              <select class="form-control" [(ngModel)]="selectedCurrency">
+                <option *ngFor="let currency of currencies" [ngValue]="currency.code">
+                  <div *ngIf="currency.code != defaultCurrency && currency.rateToLocal * limitPerDay > 0; then showRate else showCurrency"></div>
+                  <ng-template #showRate>
+                    {{ currency.code }} (= {{ currency.rateToLocal * limitPerDay | currency:defaultCurrency }})
+                  </ng-template>
+                  <ng-template #showCurrency>
+                    {{ currency.code }}
+                  </ng-template>
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <!-- category -->
+            <div class="form-group">
+              <label>Category</label>
+              <select class="form-control" [(ngModel)]="selectedCategory">
+                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-4">
+        <!-- description -->
+        <div class="form-group">
+          <label>Description</label>
+          <textarea rows="5" placeholder="Description" [(ngModel)]="description" class="form-control"></textarea>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button nbButton hero fullWidth status="primary" (click)="onAdd()">Add</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
