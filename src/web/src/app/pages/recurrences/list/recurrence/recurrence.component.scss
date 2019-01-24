@@ -18,6 +18,13 @@ $shadow-green: #00977e;
     font-weight: nb-theme(font-weight-bold);
   }
 
+  .frequency {
+    font-weight: nb-theme(font-weight-light);
+    margin-right: 0.5rem;
+    font-size: nb-theme(font-size-sm);
+    color: nb-theme(color-fg);
+  }
+
   .value {
     font-size: 3rem;
     font-weight: nb-theme(font-weight-light);

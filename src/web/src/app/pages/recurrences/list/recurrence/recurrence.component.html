@@ -7,6 +7,7 @@
       <nb-badge text="overdue" status="danger"></nb-badge>
     </ng-container>
   </div>
+  <div class="frequency">{{ frequency }}</div>
   <div class="value">
     {{ amount | currency: currency }}
     <span class="amount" *ngIf="userCurrency !== currency">{{ localAmount | currency: userCurrency }}</span>
