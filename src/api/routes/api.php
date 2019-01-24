@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
 
 Route::middleware('api')->group(function () {
 
+    Route::prefix('debug')->group(function() {
+        Route::get('/init', 'DebugController@init');
+    });
 
     Route::middleware('jwt')->group(function () {
         Route::apiResource('books', 'BookController');
@@ -33,6 +36,9 @@ Route::middleware('api')->group(function () {
             Route::get('/{from}/{to}', 'CurrenciesController@convert');
         });
 
+        Route::prefix('debug')->group(function() {
+            Route::get('/populate', 'DebugController@populate');
+        });
     });
 });
 

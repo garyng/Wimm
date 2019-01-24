@@ -38,7 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Recurrence extends Model
 {
-    protected $fillable = ['user_id', 'category_id', 'amount', 'description', 'frequency', 'next', 'currency', 'next_timestamp'];
+    protected $fillable = ['user_id', 'category_id', 'amount', 'description', 'frequency', 'currency', 'next_timestamp'];
 
     public function user()
     {

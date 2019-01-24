@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth0UserService } from 'src/app/@services/auth0.user.service';
-import { UserRepository, CurrenciesRepository } from 'src/app/@services/repository-base';
+import { UserRepository, CurrenciesRepository, DebugRepository } from 'src/app/@services/repository-base';
 import { SpinnerService } from 'src/app/@services/spinner.service';
 import { ReplaySubject } from 'rxjs';
 import { ErrorsHandler } from 'src/app/@services/errors-handler';
@@ -10,6 +10,8 @@ import { Currency } from 'src/app/@models/currency';
 import { SwalService } from 'src/app/@services/swal.service';
 import { swalQuestion } from 'src/app/@common/swal-mixins';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-profile',
@@ -28,8 +30,11 @@ export class ProfileComponent implements OnInit {
   constructor(private auth0UserService: Auth0UserService,
     private userRepo: UserRepository,
     private currenciesRepo: CurrenciesRepository,
+    private debugRepo: DebugRepository,
     public spinner: SpinnerService,
     private swalService: SwalService,
+    private toastrService: NbToastrService,
+    private router: Router,
     onError: ErrorsHandler) {
     this.load$
       .pipe(
@@ -64,6 +69,24 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  goToTestErrors() {
+    this.router.navigate(['app/error']);
+  }
+
+  initDatabase() {
+    this.debugRepo.init()
+    .subscribe(_ => {
+      this.toastrService.success('Database initialized', 'Done!');
+    });
+  }
+
+  populateData() {
+    this.debugRepo.populate()
+    .subscribe(_ => {
+      this.toastrService.success('Populated sample data', 'Done!');
+    });
   }
 
 }

@@ -26,3 +26,23 @@
     <button nbButton hero fullWidth status="primary" (click)="onChangeCurrency()" [disabled]="selectedCurrency === defaultCurrency">Save</button>
   </nb-card-body>
 </nb-card>
+
+
+<nb-card>
+  <nb-card-header>
+    Debug
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-4">
+        <button nbButton hero fullWidth status="primary" (click)="goToTestErrors()">Test errors</button>
+      </div>
+      <div class="col-sm-4">
+        <button nbButton hero fullWidth status="danger" (click)="initDatabase()">Initialize database</button>
+      </div>
+      <div class="col-sm-4">
+        <button nbButton hero fullWidth status="danger" (click)="populateData()">Populate sample data</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

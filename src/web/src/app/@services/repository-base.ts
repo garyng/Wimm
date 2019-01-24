@@ -155,3 +155,29 @@ export class RecurrencesRepository extends RepositoryBase<Recurrence> {
     super('recurrences', http);
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DebugRepository {
+  protected baseEndpoint = AppConstants.Api.baseEndpoint;
+  protected apiUrl = '';
+
+  protected apiUrlFunc = (endpoint) => `${this.baseEndpoint}/${endpoint}`;
+
+  constructor(protected http: HttpClient) {
+    this.apiUrl = this.apiUrlFunc('debug');
+  }
+
+  public init(): Observable<User> {
+    return this.http.get<ApiResponse<User>>(`${this.apiUrl}/init`).pipe(
+      map(response => response.data),
+    );
+  }
+
+  public populate(): Observable<User> {
+    return this.http.get<ApiResponse<User>>(`${this.apiUrl}/populate`).pipe(
+      map(response => response.data),
+    );
+  }
+}
