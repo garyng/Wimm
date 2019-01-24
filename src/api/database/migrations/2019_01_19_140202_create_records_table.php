@@ -18,8 +18,10 @@ class CreateRecordsTable extends Migration
             $table->decimal('amount');
             $table->text('description')->nullable();
             $table->text('currency');
-            $table->integer('category_id');
-            $table->integer('user_id');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('timestamp');
             $table->timestamps();
         });
