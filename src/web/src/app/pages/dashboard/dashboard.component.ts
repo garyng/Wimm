@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { SpinnerService } from 'src/app/@services/spinner.service';
 import { ChartData, ChartComponent } from './chart/chart.component';
 import { ReplaySubject } from 'rxjs';
-import { Record } from 'src/app/@models/Record';
+import { Record } from 'src/app/@models/record';
 import { ErrorsHandler } from 'src/app/@services/errors-handler';
 
 export class ChartSummary {
