@@ -4,6 +4,9 @@ COPY . .
 RUN npm install
 RUN npm run build -- --output-path=./dist/
 
+FROM base as dev
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "10"]
+
 FROM nginx:1.15-alpine as publish
 COPY --from=base /app/dist/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

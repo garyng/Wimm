@@ -9,14 +9,26 @@ $ cd src
 $ docker-compose up
 ```
 
-|     | port |
-| --- | ---- |
+|       | port   |
+| ----- | ------ |
 | `api` | `8000` |
 | `web` | `4200` |
 
 ## Development
 
-Sometimes `docker` fails without any obvious reasons, resulting in all ports (even though published) not accessible from the host. Here is the manually way of starting the project with `ng serve` and `php artisan serve`:
+```
+$ cd src
+$ docker-compose -f docker-compose.dev.yml up
+```
+
+|                     | container      | port   |
+| ------------------- | -------------- | ------ |
+| `php artisan serve` | `wimm-api-dev` | `8000` |
+| `ng serve`          | `wimm-web-dev` | `4200` |
+
+---
+
+Sometimes `docker` fails without any obvious reasons, resulting in all ports (even though published) not accessible from the host. In case it happens, here is the manual way of starting the project with `ng serve` and `php artisan serve`:
 
 ```console
 $ cd src/api/laradock
@@ -50,6 +62,8 @@ To start the `Angular` development server, run these on the _host_:
 $ cd src/web
 $ ng serve
 ```
+
+---
 
 ## Initializing
 
