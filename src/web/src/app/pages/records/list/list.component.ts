@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordsRepository } from 'src/app/@services/repository-base';
+import { RecordsRepository, UserRepository } from 'src/app/@services/repository-base';
 import { ErrorsHandler } from 'src/app/@services/errors-handler';
 import { Record } from 'src/app/@models/record';
 import { ReplaySubject } from 'rxjs';
@@ -19,6 +19,7 @@ import * as moment from 'moment';
 export class ListComponent implements OnInit {
   load$: ReplaySubject<{}> = new ReplaySubject();
   allRecords: LocalDataSource = new LocalDataSource();
+  userCurrency: string;
 
   tableSettings = {
     mode: 'external',
@@ -60,6 +61,12 @@ export class ListComponent implements OnInit {
           return `${row.currency} ${cell.toFixed(2)}`;
         }
       },
+      localAmount: {
+        title: 'Local amount',
+        valuePrepareFunction: (cell: number, row: Record) => {
+          return `${this.userCurrency} ${cell.toFixed(2)}`;
+        }
+      },
       description: {
         title: 'Description'
       },
@@ -76,12 +83,15 @@ export class ListComponent implements OnInit {
   };
 
   constructor(private recordsRepo: RecordsRepository,
+    private userRepo: UserRepository,
     private onError: ErrorsHandler,
     public spinner: SpinnerService,
     private swalService: SwalService) {
     this.load$
       .pipe(
         tap(_ => this.spinner.show()),
+        flatMap(_ => this.userRepo.get()),
+        tap(profile => this.userCurrency = profile.currency),
         tap(_ => this.allRecords.empty),
         flatMap(_ => this.recordsRepo.getAll()),
         tap(records => this.allRecords.load(records))
