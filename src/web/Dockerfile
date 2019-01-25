@@ -7,3 +7,10 @@ RUN npm run build -- --output-path=./dist/
 FROM nginx:1.15-alpine as publish
 COPY --from=base /app/dist/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait ./wait
+COPY entrypoint.sh .
+RUN chmod +x ./wait && \
+  chmod +x ./entrypoint.sh
+ENTRYPOINT [ "./entrypoint.sh" ]
+CMD [ "nginx", "-g", "daemon off;" ]
