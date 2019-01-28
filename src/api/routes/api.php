@@ -20,7 +20,6 @@ Route::middleware('api')->group(function () {
     });
 
     Route::middleware('jwt')->group(function () {
-        Route::apiResource('books', 'BookController');
         Route::apiResource('records', 'RecordsController');
         Route::apiResource('categories', 'CategoriesController');
         Route::apiResource('budgets', 'BudgetsController');
