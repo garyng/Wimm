@@ -12,6 +12,7 @@ import { swalQuestion } from 'src/app/@common/swal-mixins';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
+import { NbTokenService } from '@nebular/auth';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +28,10 @@ export class ProfileComponent implements OnInit {
   selectedCurrency: string;
   defaultCurrency: string;
 
+  accessToken = '';
+
   constructor(private auth0UserService: Auth0UserService,
+    private tokenService: NbTokenService,
     private userRepo: UserRepository,
     private currenciesRepo: CurrenciesRepository,
     private debugRepo: DebugRepository,
@@ -39,6 +43,8 @@ export class ProfileComponent implements OnInit {
     this.load$
       .pipe(
         tap(_ => spinner.show()),
+        flatMap(_ => this.tokenService.get()),
+        tap(token => this.accessToken = token.getValue()),
         flatMap(_ => this.auth0UserService.profile),
         tap(profile => this.profile = profile),
         flatMap(_ => this.userRepo.get()),
