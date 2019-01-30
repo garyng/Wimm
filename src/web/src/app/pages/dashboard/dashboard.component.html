@@ -10,13 +10,13 @@
         <app-chart #weeklyBalanceChart [chartData]="weeklyBalance"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Monthly" [lazyLoad]="true">
+    <nb-tab tabTitle="Monthly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
         <app-chart #monthlyBalanceChart [chartData]="monthlyBalance"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Yearly" [lazyLoad]="true">
+    <nb-tab tabTitle="Yearly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
         <app-chart #yearlyBalanceChart [chartData]="yearlyBalance"></app-chart>
@@ -37,13 +37,13 @@
         <app-chart #weeklyExpensesChart [chartData]="weeklyExpenses"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Monthly" [lazyLoad]="true">
+    <nb-tab tabTitle="Monthly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
         <app-chart #monthlyExpensesChart [chartData]="monthlyExpenses"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Yearly" [lazyLoad]="true">
+    <nb-tab tabTitle="Yearly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
         <app-chart #yearlyExpensesChart [chartData]="yearlyExpenses"></app-chart>
