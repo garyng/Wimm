@@ -37,7 +37,6 @@ class Auth0JwtMiddleware
         $accessToken = $request->bearerToken();
         try {
             $user = $this->userRepository->getUser($accessToken);
-
             if (!$user) {
                 throw new UnauthorizedException();
             }

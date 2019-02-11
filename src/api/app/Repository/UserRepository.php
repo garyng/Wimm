@@ -9,9 +9,11 @@ class UserRepository
 {
     public function getUser($accessToken) {
         $jwt = \Auth0\Login\Facade\Auth0::decodeJWT($accessToken);
-        $auth0Config = config('laravel-auth0');
-        $auth = new \Auth0\SDK\API\Authentication('garyng.auth0.com', $auth0Config['client_id'], $jwt->aud, $jwt->scope);
-        $user = $auth->userinfo($accessToken);
+        $user = \Cache::remember($jwt->sub, 10, function() use ($jwt, $accessToken) {
+            $auth0Config = config('laravel-auth0');
+            $auth = new \Auth0\SDK\API\Authentication('garyng.auth0.com', $auth0Config['client_id'], $jwt->aud, $jwt->scope);
+            return $auth->userinfo($accessToken);
+        });
         return $this->upsertUser($user);
     }
 
