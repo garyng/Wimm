@@ -4,19 +4,19 @@
     <!-- <nb-action class="button-refresh" icon="fas fa-sync" (click)="onRefresh()"></nb-action> -->
   </nb-card-header>
   <nb-tabset fullWidth (changeTab)="onBalanceTabChanged($event)">
-    <nb-tab tabTitle="Weekly">
+    <nb-tab tabTitle="Daily">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
         <app-chart #weeklyBalanceChart [chartData]="weeklyBalance"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Monthly">
+    <nb-tab tabTitle="Weekly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
         <app-chart #monthlyBalanceChart [chartData]="monthlyBalance"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Yearly">
+    <nb-tab tabTitle="Monthly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="balanceSummary"></ngx-chart-panel-summary>
         <app-chart #yearlyBalanceChart [chartData]="yearlyBalance"></app-chart>
@@ -31,19 +31,19 @@
   </nb-card-header>
 
   <nb-tabset fullWidth (changeTab)="onExpensesTabChanged($event)">
-    <nb-tab tabTitle="Weekly">
+    <nb-tab tabTitle="Daily">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
         <app-chart #weeklyExpensesChart [chartData]="weeklyExpenses"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Monthly">
+    <nb-tab tabTitle="Weekly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
         <app-chart #monthlyExpensesChart [chartData]="monthlyExpenses"></app-chart>
       </div>
     </nb-tab>
-    <nb-tab tabTitle="Yearly">
+    <nb-tab tabTitle="Monthly">
       <div class="chart-container">
         <ngx-chart-panel-summary [summary]="expensesSummary"></ngx-chart-panel-summary>
         <app-chart #yearlyExpensesChart [chartData]="yearlyExpenses"></app-chart>
